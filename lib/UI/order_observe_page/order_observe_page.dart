@@ -55,12 +55,22 @@ class OrderObservePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 60,
-        child: Center(
-          child: FlatButton(
-            onPressed: () {},
-            child: Text("Отменить заказ"),
-          ),
+        height: 100,
+        child: Column(
+          children: [
+            Center(
+              child: FlatButton(
+                onPressed: () {},
+                child: Text("Заказ выполнен"),
+              ),
+            ),
+            Center(
+              child: FlatButton(
+                onPressed: () {},
+                child: Text("Отменить заказ"),
+              ),
+            ),
+          ],
         ),
       ),
     );
