@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/dish_screen/widgets/tag_field.dart';
+import 'package:integral_admin/UI/cart_screen/cart_screen.dart';
+import 'package:integral_admin/UI/dish_edit_page/widgets/tag_field.dart';
+import 'package:integral_admin/models/cart.dart';
 import 'package:integral_admin/models/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
@@ -23,14 +25,54 @@ class DishEditScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
         iconTheme: Theme.of(context).iconTheme,
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).backgroundColor,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+                height: ResponsiveSize.height(40),
+                width: ResponsiveSize.width(30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  //color: Theme.of(context).accentColor,
+                ),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: Colors.black,
+                )),
+          ),
+        ),
         actions: [
-          RawMaterialButton(
-            onPressed: null,
-            child: Icon(Icons.shopping_basket),
+          Padding(
+            padding: EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CartScreen(Cart.test())));
+              },
+              child: Container(
+                  height: ResponsiveSize.height(40),
+                  width: ResponsiveSize.width(35),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    //color: Theme.of(context).accentColor,
+                  ),
+                  child: Icon(
+                    Icons.shopping_cart,
+                    size: 20,
+                    color: Colors.black,
+                  )),
+            ),
           ),
         ],
       ),
@@ -44,7 +86,7 @@ class DishEditScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       _dish.name,
-                      style: TextStyle(fontSize: 21),
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
                     ),
                   ),
                   SizedBox(height: 20.height),
@@ -56,11 +98,12 @@ class DishEditScreen extends StatelessWidget {
                   SizedBox(height: 20.height),
                   Text(
                     "Описание:\n\n",
-                    style: TextStyle(fontSize: 15),
+                    style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
-                  SizedBox(height: 20.height),
+                  //SizedBox(height: 20.height),
                   Container(
                     child: TextField(
+                      style: Theme.of(context).accentTextTheme.bodyText1,
                       maxLines: 10,
                       minLines: 1,
                       controller: descpription,
@@ -77,12 +120,12 @@ class DishEditScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _ButtonBar(
-              leftFieldCallback: () => print("left"),
-              rightFieldCallback: () => print("Right"),
-            ),
           ],
         ),
+      ),
+      bottomNavigationBar: _ButtonBar(
+        leftFieldCallback: () => print("left"),
+        rightFieldCallback: () => print("Right"),
       ),
     );
   }
@@ -120,6 +163,7 @@ class _PictureAndPrice extends StatelessWidget {
       Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
           border: Border.all(color: Colors.blueGrey[100], width: 0),
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10),
@@ -129,16 +173,19 @@ class _PictureAndPrice extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Цена", style: TextStyle(fontSize: 15)),
+            Text("Цена:", style: Theme.of(context).primaryTextTheme.bodyText1),
             Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               height: 75,
               width: 200,
               child: TextField(
+                style: Theme.of(context).primaryTextTheme.bodyText1,
                 controller: priceController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black)),
-                  suffix: Text("Руб."),
+                  suffix: Text("Руб.",
+                      style: Theme.of(context).primaryTextTheme.bodyText1),
                 ),
               ),
             ),
@@ -160,14 +207,43 @@ class _ButtonBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        RawMaterialButton(
-          onPressed: leftFieldCallback,
-          child: Text("Левая хуйня"),
+        Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
+          child: GestureDetector(
+            onTap: null,
+            child: Container(
+                height: ResponsiveSize.height(70),
+                width: ResponsiveSize.width(60),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Color(0xff0C2944),
+                ),
+                child: Icon(
+                  Icons.delete,
+                  size: 20,
+                  color: Colors.white,
+                )),
+          ),
         ),
-        RawMaterialButton(
-          onPressed: rightFieldCallback,
-          child: Text("Правая хуйня"),
-          fillColor: Colors.blue,
+        Container(
+          width: 200,
+          child: GestureDetector(
+            onTap: null,
+            child: Container(
+                height: ResponsiveSize.height(70),
+                width: ResponsiveSize.width(60),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15)),
+                  color: Theme.of(context).accentColor,
+                ),
+                child: Icon(
+                  Icons.check,
+                  size: 20,
+                  color: Colors.white,
+                )),
+          ),
         ),
       ],
     );

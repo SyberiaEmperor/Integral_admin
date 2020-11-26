@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           data: ThemeData(
             primaryColor: Color(0xffF5F7FA),
             backgroundColor: Color(0xffFFFFFF),
-            accentColor: Color(0xffFA7022),
+            accentColor: Color(0xddFA7022),
             cursorColor: Color(0xff435D6B),
             textTheme: TextTheme(
               bodyText1: TextStyle(
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
       title: 'Integral',
       theme: ThemeData(),
       home: Builder(builder: (context) {
-        return DishEditScreen(Dish.testDish());
+        return MainPage();
       }),
     );
   }

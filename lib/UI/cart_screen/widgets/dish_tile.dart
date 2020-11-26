@@ -28,6 +28,12 @@ class DishTile extends StatelessWidget {
           width: ResponsiveSize.width(330),
           height: ResponsiveSize.height(120),
           decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(1.0, 2.0),
+                    blurRadius: 3.0)
+              ],
               borderRadius: BorderRadius.circular(ResponsiveSize.height(10)),
               gradient: LinearGradient(colors: [
                 Theme.of(context).backgroundColor,
@@ -44,7 +50,7 @@ class DishTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius:
                         BorderRadius.circular(ResponsiveSize.height(10)),
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).backgroundColor,
                   ),
                 ),
               ),
@@ -82,14 +88,14 @@ class CountField extends StatelessWidget {
           child: Icon(
             Icons.add,
             size: 24,
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
           ),
         ),
         Text(
           count.toString(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
             fontSize: 18,
           ),
         ),
@@ -98,7 +104,7 @@ class CountField extends StatelessWidget {
           child: Icon(
             Icons.remove,
             size: 24,
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
           ),
         ),
       ],
