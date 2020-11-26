@@ -23,57 +23,114 @@ class TagController extends StatefulWidget {
 
 class _TagControllerState extends State<TagController> {
   List<Widget> tags;
+  Widget addButton;
 
-  @override
-  void initState() {
-    tags = [
-      ...(widget.categories
-          .map((e) => TagField(e, () {
-                tags.removeWhere((element) {
-                  if (element is TagField)
-                    return element.tag == e;
-                  else
-                    return false;
-                });
-                widget.removeCategory(e);
-                setState(() {});
-                print("hasdlg[");
+  
+
+  void fillTags()
+  {
+    tags = [...(widget.categories
+          .map((category) => TagField(category, 
+              (){
+                widget.removeCategory(category);
+                setState((){});
               }))
           .toList()),
-      AddTagButton(
-        addTag: () async {
+          addButton];
+
+  }
+ 
+  @override
+  void initState() {
+    super.initState();
+  addButton = AddTagButton(
+        addTag: 
+        () async {
           print(widget.categories);
           var new_tag = await Modal.mainBottomSheet(
               context, Category.values.toSet().difference(widget.categories));
           if (new_tag != null) {
-            tags.insert(
-                tags.length - 1,
-                TagField(new_tag, () {
-                  tags.removeWhere((element) {
-                    if (element is TagField)
-                      return element.tag == new_tag;
-                    else
-                      return false;
-                  });
-                  widget.removeCategory(new_tag);
-                  setState(() {});
-                  print("ahg");
-                }));
             widget.addCategory(new_tag);
             setState(() {});
-            print("ahg");
           }
         },
-      )
-    ];
-
-    super.initState();
+      );
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    fillTags();
     return Wrap(
       children: tags,
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Future<void> addDialog(BuildContext context, List<Category> data, void Function(Category) add)
+{
+  if(data.isEmpty)
+    return null;
+  return  showDialog(
+    context: context,
+    child: 
+    Center(child:Container(
+      width: MediaQuery.of(context).size.width * 0.4,
+      padding: const EdgeInsets.all(7.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+        // boxShadow: [
+        //                   BoxShadow(
+        //             color: Colors.grey,
+        //             offset: Offset(1.0, 2.0),
+        //             blurRadius: 3.0)
+        // ]
+      ),
+
+    child:ListView.builder(
+      itemCount: data.length,
+      shrinkWrap: true,
+      itemExtent: 30.0,
+      itemBuilder: (context, index) { 
+        return RawMaterialButton(
+          child: Text(data[index].asString),
+          onPressed: () {
+          add(data[index]);
+          Navigator.of(context).pop();});
+          }
+        ),))
+       );
+
+}
+
+
+*/

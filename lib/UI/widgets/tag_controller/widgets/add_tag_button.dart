@@ -10,13 +10,13 @@ class AddTagButton extends StatelessWidget {
     return GestureDetector(
       onTap: addTag, //Add tag function
       child: Container(
-        width: 100,
-        height: 100,
+        width: 25,
+        height: 25,
         decoration: BoxDecoration(
           color: Colors.grey,
           shape: BoxShape.circle,
         ),
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,size: 15, color: Colors.white,),
       ),
     );
   }

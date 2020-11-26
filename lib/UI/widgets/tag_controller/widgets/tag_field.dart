@@ -4,7 +4,7 @@ import 'package:integral_admin/models/dish.dart';
 class TagField extends StatelessWidget {
   final Category tag;
 
-  final Function removeTag;
+  final void Function() removeTag;
 
   const TagField(this.tag, this.removeTag);
 

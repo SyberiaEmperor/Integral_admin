@@ -97,7 +97,7 @@ class DishTile extends StatelessWidget {
                         color: Theme.of(context).accentColor,
                       ),
                       child: Icon(
-                        Icons.add,
+                        Icons.edit,
                         color: Colors.white,
                         size: ResponsiveSize.height(20),
                       ),
