@@ -3,37 +3,35 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/cart_screen/cart_screen.dart';
-import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
-import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_field.dart';
+
 import 'package:integral_admin/models/cart.dart';
 import 'package:integral_admin/models/dish.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
-class DishEditScreen extends StatelessWidget {
-  final Dish _dish;
+class DishCreateScreen extends StatefulWidget {
+  DishCreateScreen({Key key}) : super(key: key);
 
+  @override
+  _DishCreateScreenState createState() => _DishCreateScreenState();
+}
+
+class _DishCreateScreenState extends State<DishCreateScreen> {
   final TextEditingController price = TextEditingController();
+
   final TextEditingController descpription = TextEditingController();
+
   final TextEditingController name = TextEditingController();
-  Set<Category> cats;
 
   Uint8List image = null;
 
+  Set<Category> cats = {};
+
   bool first = true;
 
-  DishEditScreen(this._dish, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    if (first) {
-      price.text = _dish.price.toString();
-      descpription.text = _dish.description;
-      name.text = _dish.name;
-      cats = Set.from(_dish.categories_s);
-      first = !first;
-    }
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -98,15 +96,15 @@ class DishEditScreen extends StatelessWidget {
                       width: 300,
                       child: TextField(
                         controller: name,
-                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                        decoration: InputDecoration(
+                          hintText: "Название",
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20.height),
                   _PictureAndPrice(
                     priceController: price,
-                    dishPrice: _dish.price,
-                    picUrl: _dish.url,
                     img: image,
                   ),
                   SizedBox(height: 20.height),
@@ -146,15 +144,10 @@ class DishEditScreen extends StatelessWidget {
 }
 
 class _PictureAndPrice extends StatefulWidget {
-  final String picUrl;
-  final int dishPrice;
-
   final TextEditingController priceController;
   Uint8List img;
 
   _PictureAndPrice({
-    @required this.picUrl,
-    @required this.dishPrice,
     this.priceController,
     this.img,
   });
@@ -183,9 +176,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
             image: DecorationImage(
               fit: BoxFit.fill,
               image: widget.img == null
-                  ? (widget.picUrl == null
-                      ? AssetImage('asset/no_image.png')
-                      : CachedNetworkImageProvider(widget.picUrl))
+                  ? AssetImage('assets/no_image.jpg')
                   : MemoryImage(widget.img),
             ),
           ),
@@ -236,26 +227,8 @@ class _ButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
-          child: GestureDetector(
-            onTap: null,
-            child: Container(
-                height: ResponsiveSize.height(70),
-                width: ResponsiveSize.width(60),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Color(0xff0C2944),
-                ),
-                child: Icon(
-                  Icons.delete,
-                  size: 20,
-                  color: Colors.white,
-                )),
-          ),
-        ),
         Container(
           width: 200,
           child: GestureDetector(

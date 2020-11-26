@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/cart_screen/cart_screen.dart';
+import 'package:integral_admin/UI/dish_create_page/dish_create_page.dart';
 import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
 import 'package:integral_admin/UI/main_page/widgets/market_title.dart';
@@ -27,6 +28,13 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DishCreateScreen()));
+          },
+          child: Icon(Icons.add),
+        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.0,

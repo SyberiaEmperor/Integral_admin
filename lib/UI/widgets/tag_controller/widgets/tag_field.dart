@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:integral_admin/models/dish.dart';
 
 class TagField extends StatelessWidget {
-  final String tag;
+  final Category tag;
 
-  const TagField(this.tag);
+  final Function removeTag;
+
+  const TagField(this.tag, this.removeTag);
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +19,27 @@ class TagField extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              tag,
+              tag.asString,
               style: TextStyle(fontSize: 12, color: Colors.white),
               textWidthBasis: TextWidthBasis.parent,
             ),
             SizedBox(
               width: 5,
             ),
-            Container(
-              width: 14,
-              height: 25,
-              decoration: BoxDecoration(
-                color: Color(0xff0c2977),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.close,
-                color: Colors.white,
-                size: 10,
+            GestureDetector(
+              onTap: removeTag,
+              child: Container(
+                width: 14,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: Color(0xff0c2977),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 10,
+                ),
               ),
             ),
           ],
