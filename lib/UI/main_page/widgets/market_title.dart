@@ -17,29 +17,23 @@ class MarketTitle extends StatelessWidget {
             backgroundImage: AssetImage('assets/integral.jpg'),
           ),
           SizedBox(width: ResponsiveSize.width(7)),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: ResponsiveSize.width(189),
-                height: ResponsiveSize.height(20),
-                child: Text(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Интеграл",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: ResponsiveSize.height(5),
+                ),
+                Text(
                   "Общественное питание",
                   style: Theme.of(context).accentTextTheme.bodyText1,
                 ),
-              ),
-              SizedBox(
-                height: ResponsiveSize.height(5),
-              ),
-              Container(
-                width: ResponsiveSize.width(112),
-                height: ResponsiveSize.height(20),
-                child: Text(
-                  "Интеграл",
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
