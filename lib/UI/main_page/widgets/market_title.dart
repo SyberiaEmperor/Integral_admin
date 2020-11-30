@@ -14,6 +14,7 @@ class MarketTitle extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Theme.of(context).primaryColor,
             radius: ResponsiveSize.height(25),
+            backgroundImage: AssetImage('assets/integral.jpg'),
           ),
           SizedBox(width: ResponsiveSize.width(7)),
           Column(
