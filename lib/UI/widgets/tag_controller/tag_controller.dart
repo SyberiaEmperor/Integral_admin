@@ -25,37 +25,32 @@ class _TagControllerState extends State<TagController> {
   List<Widget> tags;
   Widget addButton;
 
-  
-
-  void fillTags()
-  {
-    tags = [...(widget.categories
-          .map((category) => TagField(category, 
-              (){
+  void fillTags() {
+    tags = [
+      ...(widget.categories
+          .map((category) => TagField(category, () {
                 widget.removeCategory(category);
-                setState((){});
+                setState(() {});
               }))
           .toList()),
-          addButton];
-
+      addButton
+    ];
   }
- 
+
   @override
   void initState() {
     super.initState();
-  addButton = AddTagButton(
-        addTag: 
-        () async {
-          print(widget.categories);
-          var new_tag = await Modal.mainBottomSheet(
-              context, Category.values.toSet().difference(widget.categories));
-          if (new_tag != null) {
-            widget.addCategory(new_tag);
-            setState(() {});
-          }
-        },
-      );
-    
+    addButton = AddTagButton(
+      addTag: () async {
+        print(widget.categories);
+        var new_tag = await Modal.mainBottomSheet(
+            context, Category.values.toSet().difference(widget.categories));
+        if (new_tag != null) {
+          widget.addCategory(new_tag);
+          setState(() {});
+        }
+      },
+    );
   }
 
   @override
@@ -66,34 +61,6 @@ class _TagControllerState extends State<TagController> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 Future<void> addDialog(BuildContext context, List<Category> data, void Function(Category) add)
