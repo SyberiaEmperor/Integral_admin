@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/cart_screen/cart_screen.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 import 'package:integral_admin/models/cart.dart';
@@ -49,40 +48,15 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                 width: ResponsiveSize.width(30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  //color: Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                 ),
                 child: Icon(
-                  Icons.arrow_back_ios,
+                  Icons.arrow_back,
                   size: 20,
-                  color: Colors.black,
+                  color: Colors.white,
                 )),
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CartScreen(Cart.test())));
-              },
-              child: Container(
-                  height: ResponsiveSize.height(40),
-                  width: ResponsiveSize.width(35),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    //color: Theme.of(context).accentColor,
-                  ),
-                  child: Icon(
-                    Icons.shopping_cart,
-                    size: 20,
-                    color: Colors.black,
-                  )),
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -204,10 +178,16 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
                 style: Theme.of(context).primaryTextTheme.bodyText1,
                 controller: widget.priceController,
                 decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
                   border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black)),
-                  suffix: Text("Руб.",
-                      style: Theme.of(context).primaryTextTheme.bodyText1),
+                  suffixIcon: Container(
+                    alignment: Alignment.centerRight,
+                    width: ResponsiveSize.width(50),
+                    child: Text("Руб.",
+                        style: Theme.of(context).primaryTextTheme.bodyText1),
+                  ),
                 ),
               ),
             ),

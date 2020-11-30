@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/dish_edit_page/dish_edit_page.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
-import 'UI/cart_screen/cart_screen.dart';
 import 'UI/main_page/main_page.dart';
 import 'models/cart.dart';
 import 'models/dish.dart';

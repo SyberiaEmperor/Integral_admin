@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/cart_screen/cart_screen.dart';
 import 'package:integral_admin/UI/dish_create_page/dish_create_page.dart';
 import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
@@ -59,31 +58,6 @@ class MainPage extends StatelessWidget {
                   )),
             ),
           ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 16.0, top: 8.0, bottom: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CartScreen(Cart.test())));
-                },
-                child: Container(
-                    height: ResponsiveSize.height(40),
-                    width: ResponsiveSize.width(35),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Theme.of(context).accentColor,
-                    ),
-                    child: Icon(
-                      Icons.shopping_cart,
-                      size: 20,
-                      color: Colors.white,
-                    )),
-              ),
-            ),
-          ],
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(
