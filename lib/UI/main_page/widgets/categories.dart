@@ -17,14 +17,14 @@ class Categories extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
           separatorBuilder: (context, index) =>
-              SizedBox(width: ResponsiveSize.width(24)),
+              SizedBox(width: ResponsiveSize.width(15)),
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemCount: categories.length + 2,
           itemBuilder: (context, index) {
             if (index == 0 || index == categories.length + 1)
               return SizedBox(
-                width: ResponsiveSize.width(6),
+                width: ResponsiveSize.width(1),
               );
 
             return Container(
