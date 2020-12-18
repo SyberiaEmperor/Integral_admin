@@ -77,7 +77,7 @@ class DishTile extends StatelessWidget {
                       Container(
                         width: ResponsiveSize.width(61),
                         child: Text(
-                          "${dish.price}Р",
+                          '${dish.price}Р',
                           style: Theme.of(context).accentTextTheme.bodyText2,
                         ),
                       ),

@@ -23,6 +23,9 @@ environment:
 dependencies:
   image_picker: ^0.6.7
   cached_network_image: ^2.3.3
+  flutter_bloc: ^6.1.1
+  pedantic: ^1.9.2
+  dio: 3.0.10
   flutter:
     sdk: flutter
 

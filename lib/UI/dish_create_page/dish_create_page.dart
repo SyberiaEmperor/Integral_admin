@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
-import 'package:integral_admin/models/cart.dart';
 import 'package:integral_admin/models/dish.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
+import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 class DishCreateScreen extends StatefulWidget {
   DishCreateScreen({Key key}) : super(key: key);
@@ -23,7 +21,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
 
   final TextEditingController name = TextEditingController();
 
-  Uint8List image = null;
+  Uint8List image;
 
   Set<Category> cats = {};
 
@@ -71,7 +69,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                       child: TextField(
                         controller: name,
                         decoration: InputDecoration(
-                          hintText: "Название",
+                          hintText: 'Название',
                         ),
                       ),
                     ),
@@ -83,7 +81,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                   ),
                   SizedBox(height: 20.height),
                   Text(
-                    "Описание:\n\n",
+                    'Описание:\n\n',
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
                   //SizedBox(height: 20.height),
@@ -110,8 +108,8 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
         ),
       ),
       bottomNavigationBar: _ButtonBar(
-        leftFieldCallback: () => print("left"),
-        rightFieldCallback: () => print("Right"),
+        leftFieldCallback: () => print('left'),
+        rightFieldCallback: () => print('Right'),
       ),
     );
   }
@@ -169,7 +167,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Цена:", style: Theme.of(context).primaryTextTheme.bodyText1),
+            Text('Цена:', style: Theme.of(context).primaryTextTheme.bodyText1),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               height: 75,
@@ -185,7 +183,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
                   suffixIcon: Container(
                     alignment: Alignment.centerRight,
                     width: ResponsiveSize.width(50),
-                    child: Text("Руб.",
+                    child: Text('Руб.',
                         style: Theme.of(context).primaryTextTheme.bodyText1),
                   ),
                 ),

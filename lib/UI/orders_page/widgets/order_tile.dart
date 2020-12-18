@@ -38,14 +38,14 @@ class OrderTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Заказ#2151512",
+                        'Заказ#2151512',
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       ),
-                      Text("21.01.2020",
+                      Text('21.01.2020',
                           style: Theme.of(context).accentTextTheme.bodyText1),
                     ],
                   ),
-                  Text("Какой-то текст",
+                  Text('Какой-то текст',
                       style: Theme.of(context).accentTextTheme.bodyText1),
                 ],
               ),

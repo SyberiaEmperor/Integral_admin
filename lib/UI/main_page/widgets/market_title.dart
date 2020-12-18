@@ -22,14 +22,14 @@ class MarketTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Интеграл",
+                  'Интеграл',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: ResponsiveSize.height(5),
                 ),
                 Text(
-                  "Общественное питание",
+                  'Общественное питание',
                   style: Theme.of(context).accentTextTheme.bodyText1,
                 ),
               ],

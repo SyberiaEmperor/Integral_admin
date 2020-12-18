@@ -6,12 +6,11 @@ import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
 import 'package:integral_admin/UI/main_page/widgets/market_title.dart';
 import 'package:integral_admin/UI/main_page/widgets/search.dart';
 import 'package:integral_admin/UI/orders_page/orders_page.dart';
-import 'package:integral_admin/models/cart.dart';
 import 'package:integral_admin/models/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class MainPage extends StatelessWidget {
-  List<Dish> dishes = [
+  final List<Dish> dishes = [
     Dish.testDish(),
     Dish.testDish2(),
     Dish.testDish3(),

@@ -5,7 +5,7 @@ import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_wheel.dart'
 import 'package:integral_admin/models/dish.dart';
 
 class TagController extends StatefulWidget {
-  Set<Category> categories;
+  final Set<Category> categories;
 
   TagController({this.categories});
 

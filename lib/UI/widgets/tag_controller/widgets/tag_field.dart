@@ -15,6 +15,10 @@ class TagField extends StatelessWidget {
       child: Container(
         height: 25,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(40),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -43,10 +47,6 @@ class TagField extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
-          borderRadius: BorderRadius.circular(40),
         ),
       ),
     );

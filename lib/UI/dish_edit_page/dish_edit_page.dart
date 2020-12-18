@@ -1,14 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/main_page/widgets/categories.dart';
-import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
-import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_field.dart';
-import 'package:integral_admin/models/cart.dart';
+
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:integral_admin/models/dish.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
+import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 class DishEditScreen extends StatelessWidget {
   final Dish _dish;
@@ -18,7 +17,7 @@ class DishEditScreen extends StatelessWidget {
   final TextEditingController name = TextEditingController();
   Set<Category> cats;
 
-  Uint8List image = null;
+  Uint8List image;
 
   bool first = true;
 
@@ -85,7 +84,7 @@ class DishEditScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20.height),
                   Text(
-                    "Описание:\n\n",
+                    'Описание:\n\n',
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
                   //SizedBox(height: 20.height),
@@ -112,8 +111,8 @@ class DishEditScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: _ButtonBar(
-        leftFieldCallback: () => print("left"),
-        rightFieldCallback: () => print("Right"),
+        leftFieldCallback: () => print('left'),
+        rightFieldCallback: () => print('Right'),
       ),
     );
   }
@@ -178,7 +177,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Цена:", style: Theme.of(context).primaryTextTheme.bodyText1),
+            Text('Цена:', style: Theme.of(context).primaryTextTheme.bodyText1),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               height: 75,
@@ -189,7 +188,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black)),
-                  suffix: Text("Руб.",
+                  suffix: Text('Руб.',
                       style: Theme.of(context).primaryTextTheme.bodyText1),
                 ),
               ),

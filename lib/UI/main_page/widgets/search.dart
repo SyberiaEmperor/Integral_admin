@@ -27,7 +27,7 @@ class Search extends StatelessWidget {
               color: Theme.of(context).cursorColor,
             ),
           ),
-          hintText: "Поиск",
+          hintText: 'Поиск',
           hintStyle: Theme.of(context).accentTextTheme.bodyText1,
           fillColor: Theme.of(context).primaryColor,
           filled: true,

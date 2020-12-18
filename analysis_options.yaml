@@ -1,0 +1,30 @@
+include: package:pedantic/analysis_options.1.9.0.yaml
+
+linter:
+  rules:
+    omit_local_variable_types : false
+    prefer_collection_literals: false
+    prefer_generic_function_type_aliases: true
+    prefer_initializing_formals: true
+    prefer_inlined_adds: true
+    prefer_spread_collections: true
+    recursive_getters: true
+    sort_child_properties_last: true
+    sort_unnamed_constructors_first: true
+    sort_constructors_first: false
+    type_annotate_public_apis: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_const: true
+    unnecessary_final: true #Подумать, нужно ли и не соприкасается ли с другими линтами на тему типов 
+    unnecessary_new: true
+    unnecessary_overrides: true
+    unnecessary_raw_strings: true
+    unnecessary_string_escapes: true
+    unnecessary_string_interpolations: true
+    unnecessary_this: true
+    use_raw_strings: true
+    use_to_and_as_if_applicable: true
+    
+
+    
+
