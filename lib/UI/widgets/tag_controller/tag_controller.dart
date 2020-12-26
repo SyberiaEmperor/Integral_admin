@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/widgets/add_tag_button.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_field.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_wheel.dart';
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 
 class TagController extends StatefulWidget {
   final Set<Category> categories;

@@ -4,11 +4,14 @@ class Dish {
   final String id;
   final String name;
   final String description;
-  final Set<Category> categories_s;
+  final Set<Category> _categories;
   final String url;
   final int price;
 
-  List<String> get categories => categories_s.map((e) => e.asString).toList();
+  List<String> get categories => _categories.map((e) => e.asString).toList();
+  bool containsCategory(Category category) {
+    return _categories.contains(category);
+  }
 
   Dish(
       {@required this.id,
@@ -17,7 +20,7 @@ class Dish {
       @required Set<Category> categories,
       @required this.url,
       @required this.price})
-      : categories_s = categories;
+      : _categories = categories;
 
   static Dish testDish() {
     return Dish(

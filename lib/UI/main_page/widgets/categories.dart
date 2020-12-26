@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Categories extends StatelessWidget {

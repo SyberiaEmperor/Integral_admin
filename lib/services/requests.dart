@@ -1,7 +1,7 @@
 import 'dart:html';
 
 import 'package:dio/dio.dart';
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 
 class Requests {
   static const IP = '178.154.255.209:3777';

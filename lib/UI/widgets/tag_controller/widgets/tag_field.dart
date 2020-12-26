@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 
 class TagField extends StatelessWidget {
   final Category tag;

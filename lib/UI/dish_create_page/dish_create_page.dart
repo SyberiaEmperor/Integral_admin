@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';

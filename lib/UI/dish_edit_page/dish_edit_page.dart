@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:integral_admin/models/dish.dart';
+import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
@@ -28,7 +28,7 @@ class DishEditScreen extends StatelessWidget {
       price.text = _dish.price.toString();
       descpription.text = _dish.description;
       name.text = _dish.name;
-      cats = Set.from(_dish.categories_s);
+      cats = Set.from(_dish.categories);
       first = !first;
     }
 
