@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/dish_create_page/dish_create_page.dart';
@@ -33,9 +34,22 @@ class MainPage extends StatelessWidget {
         onTap: () => unfocus(context),
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DishCreateScreen()));
+            onPressed: () async {
+              /* Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DishCreateScreen()));*/
+              FormData formData = FormData.fromMap({
+                'name': 'dish',
+                'description': 'test description',
+                'picture':
+                    'https://www.forumdaily.com/wp-content/uploads/2016/08/Depositphotos_41466555_m-2015.jpg',
+                'categories': [2, 3],
+                'price': 100,
+              });
+              Response res = await Dio().post(
+                  'http://178.154.255.209:3777/dishes/',
+                  data: formData,
+                  options: Options(contentType: Headers.jsonContentType));
+              print(res);
             },
             child: Icon(Icons.add),
           ),
