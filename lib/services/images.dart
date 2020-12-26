@@ -14,7 +14,7 @@ class Images {
               ?.readAsBytes();
       return img;
     } catch (PlatformException) {
-      print("Image pick error");
+      print('Image pick error');
     }
   }
 }

@@ -117,11 +117,11 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
 
 class _PictureAndPrice extends StatefulWidget {
   final TextEditingController priceController;
-  Uint8List img;
+  final Uint8List img;
 
   _PictureAndPrice({
-    this.priceController,
-    this.img,
+    @required this.priceController,
+    @required this.img,
   });
 
   @override
@@ -129,12 +129,19 @@ class _PictureAndPrice extends StatefulWidget {
 }
 
 class __PictureAndPriceState extends State<_PictureAndPrice> {
+  Uint8List img;
+  @override
+  void initState() {
+    super.initState();
+    img = widget.img;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       GestureDetector(
         onTap: () async {
-          widget.img = await Images.getImage();
+          img = await Images.getImage();
           setState(() {});
         },
         child: Container(
@@ -147,7 +154,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
             ),
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: widget.img == null
+              image: img == null
                   ? AssetImage('assets/no_image.jpg')
                   : MemoryImage(widget.img),
             ),

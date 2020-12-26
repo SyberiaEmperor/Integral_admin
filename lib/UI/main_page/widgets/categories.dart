@@ -4,10 +4,15 @@ import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Categories extends StatelessWidget {
-  final int selectedCategory;
+  final Category selectedCategory;
   final List<Category> categories;
+  final void Function(Category) onSelect;
 
-  const Categories(this.categories, {Key key, this.selectedCategory = 0})
+  const Categories(
+      {@required this.categories,
+      @required this.selectedCategory,
+      @required this.onSelect,
+      Key key})
       : super(key: key);
 
   @override
@@ -15,31 +20,33 @@ class Categories extends StatelessWidget {
     var theme = Theme.of(context);
 
     return Expanded(
-      child: ListView.separated(
-          separatorBuilder: (context, index) =>
-              SizedBox(width: ResponsiveSize.width(15)),
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: categories.length + 2,
-          itemBuilder: (context, index) {
-            if (index == 0 || index == categories.length + 1) {
-              return SizedBox(
-                width: ResponsiveSize.width(1),
-              );
-            }
-
-            return Container(
-              height: ResponsiveSize.height(47),
-              child: Center(
-                child: Text(
-                  categories[index - 1].asString,
-                  style: (selectedCategory == index - 1)
-                      ? theme.accentTextTheme.bodyText2
-                      : theme.accentTextTheme.bodyText1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: ListView.separated(
+            separatorBuilder: (context, index) =>
+                SizedBox(width: ResponsiveSize.width(15)),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  onSelect(categories[index]);
+                },
+                child: Container(
+                  height: ResponsiveSize.height(47),
+                  child: Center(
+                    child: Text(
+                      categories[index].asString,
+                      style: (selectedCategory.index == index)
+                          ? theme.accentTextTheme.bodyText2
+                          : theme.accentTextTheme.bodyText1,
+                    ),
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }
