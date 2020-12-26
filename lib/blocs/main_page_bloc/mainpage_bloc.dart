@@ -12,13 +12,28 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DishController dishController;
   List<Dish> _currentDishes;
   Category _currentCategory;
-  MainPageBloc({@required this.dishController}) : super(MainPageInitial()) {
+  MainPageBloc({@required this.dishController}) : super(LoadingState()) {
     _currentCategory = Category.all;
-    _currentDishes = dishController.byCategory(_currentCategory);
+    add(Update());
   }
 
   @override
   Stream<MainPageState> mapEventToState(
     MainPageEvent event,
-  ) async* {}
+  ) async* {
+    yield LoadingState();
+    if (event is Update) {
+      {
+        await dishController.updateDishes();
+        _currentDishes = dishController.byCategory(_currentCategory);
+      }
+    } else if (event is ChangeCategoryEvent) {
+      _currentCategory = event.category;
+      _currentDishes = dishController.byCategory(_currentCategory);
+    } else if (event is SearchEvent) {
+      _currentDishes = dishController.search(event.text);
+    }
+    yield MainPageInitialState(
+        dishes: _currentDishes, category: _currentCategory);
+  }
 }
