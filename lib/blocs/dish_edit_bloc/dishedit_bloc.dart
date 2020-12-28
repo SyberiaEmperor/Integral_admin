@@ -16,16 +16,16 @@ class DisheditBloc extends Bloc<DisheditEvent, DisheditState> {
     DisheditEvent event,
   ) async* {
     bool successful = false;
-    if (event is EditingDone) {
+    if (event is DishEditingDone) {
       yield DishEditLoadingState();
       try {
         //TODO: Implement actions
-        _dish = (event as EditingDone).dish;
+        _dish = event.dish;
         successful = true;
       } on Exception {
         print('wooob');
       }
-      yield EditingComplete(successful);
+      yield DishEditingCompleteState(successful);
       yield DishEditMainState(_dish);
     }
   }

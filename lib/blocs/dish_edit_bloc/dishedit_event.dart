@@ -3,7 +3,7 @@ part of 'dishedit_bloc.dart';
 @immutable
 abstract class DisheditEvent {}
 
-class EditingDone {
+class DishEditingDone extends DisheditEvent {
   final Dish dish;
-  EditingDone({@required this.dish});
+  DishEditingDone({@required this.dish});
 }

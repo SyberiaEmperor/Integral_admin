@@ -8,10 +8,11 @@ class DishEditMainState extends DisheditState {
   DishEditMainState(this.dish);
 }
 
-class EditingComplete extends DisheditState {
+class DishEditingCompleteState extends DisheditState {
   final bool successful;
-
-  EditingComplete(this.successful);
+  final String caption;
+  DishEditingCompleteState(this.successful,
+      {this.caption = 'Возникла ошибка во время сохранения изменений.'});
 }
 
 class DishEditLoadingState extends DisheditState {}
