@@ -9,6 +9,7 @@ class Dish {
   final int price;
 
   List<String> get categories => _categories.map((e) => e.asString).toList();
+  Set<Category> get categoriesSet => _categories;
   bool containsCategory(Category category) {
     return _categories.contains(category);
   }
@@ -73,9 +74,9 @@ class Dish {
     );
   }
 
-  factory Dish.fromData(Map<String, dynamic> data) {
+  factory Dish.fromJson(Map<String, dynamic> data) {
     Set<Category> categories =
-        data['catedories'].map((number) => Category.values[number]).toList();
+        data['categories']?.map((number) => Category.values[number]);
     return Dish(
       categories: categories,
       description: data['description'],
@@ -84,6 +85,16 @@ class Dish {
       name: data['name'],
       price: data['price'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'price': price,
+      'categories': _categories.map((e) => e.index),
+      'picurl': (url.length > 100) ? 'data:image/jpeg;base64,' + url : url,
+    };
   }
 }
 
@@ -97,7 +108,11 @@ enum Category {
   sauce,
 }
 
-extension Str on Category {
+extension CategoriesExt on Category {
+  static List<Category> get excludeAll {
+    return Category.values.sublist(1);
+  }
+
   String get asString {
     switch (this) {
       case Category.all:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/dish_edit_page/dish_edit_page.dart';
 import 'package:integral_admin/entities/dish.dart';
+import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class DishTile extends StatelessWidget {
@@ -13,8 +14,10 @@ class DishTile extends StatelessWidget {
     return Align(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DishEditScreen(dish)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DishEditScreen<DishCreate>(dish)));
         },
         child: Container(
           //color: Colors.black,

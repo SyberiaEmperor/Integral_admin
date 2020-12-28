@@ -1,255 +1,181 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:integral_admin/UI/dish_edit_page/widgets/button_bar.dart';
+import 'package:integral_admin/UI/main_page/widgets/categories.dart';
+import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
-import 'package:integral_admin/services/images.dart';
+import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
-class DishEditScreen extends StatelessWidget {
+import 'widgets/picture_and_price.dart';
+
+class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
   final Dish _dish;
+  DisheditBloc _bloc;
 
   final TextEditingController price = TextEditingController();
   final TextEditingController descpription = TextEditingController();
   final TextEditingController name = TextEditingController();
+
+  String url;
   Set<Category> cats;
 
   Uint8List image;
 
-  bool first = true;
-
-  DishEditScreen(this._dish, {Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    if (first) {
-      price.text = _dish.price.toString();
-      descpription.text = _dish.description;
-      name.text = _dish.name;
-      cats = Set.from(_dish.categories);
-      first = !first;
+  DishEditScreen(this._dish, {Key key}) : super(key: key) {
+    print(Mode);
+    print(Mode is DishChange);
+    print(Mode is DishCreate);
+    if (Mode is DishChange) {
+      _setValues(_dish);
+    } else {
+      cats = Set<Category>();
     }
+    _bloc = DisheditBloc(_dish);
+  }
 
-    return Scaffold(
+  void _setValues(Dish dish) {
+    price.text = _dish.price.toString();
+    descpription.text = _dish.description;
+    name.text = _dish.name;
+    cats = Set.from(_dish.categoriesSet);
+    url = _dish.url;
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      iconTheme: Theme.of(context).iconTheme,
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        iconTheme: Theme.of(context).iconTheme,
-        backgroundColor: Theme.of(context).backgroundColor,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                height: ResponsiveSize.height(40),
-                width: ResponsiveSize.width(30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Theme.of(context).accentColor,
-                ),
-                child: Icon(
-                  Icons.arrow_back,
-                  size: 20,
-                  color: Colors.white,
-                )),
+      leading: Padding(
+        padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            height: ResponsiveSize.height(40),
+            width: ResponsiveSize.width(30),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Theme.of(context).accentColor,
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              size: 20,
+              color: Colors.white,
+            ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: TextField(
-                        controller: name,
-                        style: Theme.of(context).primaryTextTheme.bodyText1,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.height),
-                  _PictureAndPrice(
-                    priceController: price,
-                    dishPrice: _dish.price,
-                    picUrl: _dish.url,
-                    img: image,
-                  ),
-                  SizedBox(height: 20.height),
-                  Text(
-                    'Описание:\n\n',
-                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                  ),
-                  //SizedBox(height: 20.height),
-                  Container(
-                    child: TextField(
-                      style: Theme.of(context).accentTextTheme.bodyText1,
-                      maxLines: 10,
-                      minLines: 1,
-                      controller: descpription,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.height),
-                  TagController(
-                    categories: cats,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _ButtonBar(
-        leftFieldCallback: () => print('left'),
-        rightFieldCallback: () => print('Right'),
       ),
     );
   }
-}
 
-class _PictureAndPrice extends StatefulWidget {
-  final String picUrl;
-  final int dishPrice;
-
-  final TextEditingController priceController;
-  Uint8List img;
-
-  _PictureAndPrice({
-    @required this.picUrl,
-    @required this.dishPrice,
-    this.priceController,
-    this.img,
-  });
-
-  @override
-  __PictureAndPriceState createState() => __PictureAndPriceState();
-}
-
-class __PictureAndPriceState extends State<_PictureAndPrice> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      GestureDetector(
-        onTap: () async {
-          widget.img = await Images.getImage();
-          setState(() {});
-        },
-        child: Container(
-          width: double.infinity,
-          height: 281.height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: widget.img == null
-                  ? (widget.picUrl == null
-                      ? AssetImage('asset/no_image.png')
-                      : CachedNetworkImageProvider(widget.picUrl))
-                  : MemoryImage(widget.img),
-            ),
-          ),
-        ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: _buildAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: BlocConsumer(
+            cubit: _bloc,
+            listener: (context, state) {
+              if (state is DishEditMainState) {
+                _setValues(state.dish);
+              }
+              if (state is DishEditingCompleteState) {
+                if (state.successful) {
+                  Navigator.of(context).pop();
+                } else {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(state.caption),
+                  ));
+                }
+              }
+            },
+            builder: (context, state) {
+              if (state is DishEditLoadingState) {
+                return Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('Пожалуйста, подождите'),
+                  ],
+                );
+              }
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Center(
+                          child: Container(
+                            width: ResponsiveSize.width(300),
+                            child: TextField(
+                              controller: name,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.height),
+                        PictureAndPrice(
+                          priceController: price,
+                          picUrl: url,
+                          img: image,
+                          picChanged: (newPic) {
+                            image = newPic;
+                          },
+                        ),
+                        SizedBox(height: 20.height),
+                        Text(
+                          'Описание:\n\n',
+                          style: Theme.of(context).primaryTextTheme.bodyText1,
+                        ),
+                        //SizedBox(height: 20.height),
+                        Container(
+                          child: TextField(
+                            style: Theme.of(context).accentTextTheme.bodyText1,
+                            maxLines: 10,
+                            minLines: 1,
+                            controller: descpription,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.height),
+                        TagController(
+                          categories: cats,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
       ),
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          border: Border.all(color: Colors.blueGrey[100], width: 0),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Цена:', style: Theme.of(context).primaryTextTheme.bodyText1),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              height: 75,
-              width: 200,
-              child: TextField(
-                style: Theme.of(context).primaryTextTheme.bodyText1,
-                controller: widget.priceController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  suffix: Text('Руб.',
-                      style: Theme.of(context).primaryTextTheme.bodyText1),
-                ),
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomButtonBar(
+        leftFieldCallback: () => print('left'),
+        rightFieldCallback: () => _bloc.add(DishEditingDone(
+            dish: Dish(
+          id: _dish?.id,
+          categories: cats,
+          description: descpription.text,
+          name: name.text,
+          price: int.tryParse(price.text),
+          url: image.toString(),
+        ))),
       ),
-    ]);
-  }
-}
-
-class _ButtonBar extends StatelessWidget {
-  final void Function() leftFieldCallback;
-  final void Function() rightFieldCallback;
-
-  const _ButtonBar(
-      {@required this.leftFieldCallback, @required this.rightFieldCallback});
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
-          child: GestureDetector(
-            onTap: null,
-            child: Container(
-                height: ResponsiveSize.height(70),
-                width: ResponsiveSize.width(60),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Color(0xff0C2944),
-                ),
-                child: Icon(
-                  Icons.delete,
-                  size: 20,
-                  color: Colors.white,
-                )),
-          ),
-        ),
-        Container(
-          width: 200,
-          child: GestureDetector(
-            onTap: null,
-            child: Container(
-                height: ResponsiveSize.height(70),
-                width: ResponsiveSize.width(60),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  color: Theme.of(context).accentColor,
-                ),
-                child: Icon(
-                  Icons.check,
-                  size: 20,
-                  color: Colors.white,
-                )),
-          ),
-        ),
-      ],
     );
   }
 }
