@@ -4,6 +4,9 @@ import 'package:integral_admin/UI/auth_page/widgets/input_field.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class AuthPage extends StatelessWidget {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,8 +14,8 @@ class AuthPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AuthTitle(),
-          InputField.emailField(),
-          InputField.passwordField(),
+          InputField.emailField(email),
+          InputField.passwordField(password),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(

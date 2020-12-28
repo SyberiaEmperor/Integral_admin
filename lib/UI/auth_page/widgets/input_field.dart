@@ -4,19 +4,21 @@ import 'package:integral_admin/services/responsive_size.dart';
 class InputField extends StatefulWidget {
   final String hint;
   final Widget suffixIcon;
-  final Function suffixAction;
+  final bool isPassword;
+  final TextEditingController controller;
 
-  InputField({this.hint, this.suffixIcon, this.suffixAction});
+  InputField(this.controller,
+      {this.hint, this.suffixIcon, this.isPassword = false});
 
-  InputField.emailField()
+  InputField.emailField(this.controller)
       : hint = 'Email',
         suffixIcon = Icon(Icons.mail),
-        suffixAction = null;
+        isPassword = false;
 
-  InputField.passwordField()
+  InputField.passwordField(this.controller)
       : hint = 'Пароль',
-        suffixIcon = Icon(Icons.lock),
-        suffixAction = null;
+        suffixIcon = Icon(Icons.visibility),
+        isPassword = true;
 
   @override
   _InputFieldState createState() => _InputFieldState();
@@ -24,6 +26,18 @@ class InputField extends StatefulWidget {
 
 class _InputFieldState extends State<InputField> {
   bool passwordVisible = false;
+  Function suffixAction;
+
+  @override
+  void initState() {
+    if (widget.isPassword) {
+      suffixAction = () {
+        passwordVisible = !passwordVisible;
+        setState(() {});
+      };
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +45,27 @@ class _InputFieldState extends State<InputField> {
       padding: EdgeInsets.symmetric(
           horizontal: ResponsiveSize.width(15),
           vertical: ResponsiveSize.height(ResponsiveSize.height(5))),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: widget.hint,
-          suffixIcon: GestureDetector(
-              onTap: widget.suffixAction, child: widget.suffixIcon),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          accentColor: Color(0xddFA7022),
+          primaryColor: Color(0xddFA7022),
+        ),
+        child: TextFormField(
+          controller: widget.controller,
+          obscureText: !passwordVisible,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            suffixIcon: GestureDetector(
+                onTap: suffixAction,
+                child: widget.isPassword
+                    ? (passwordVisible
+                        ? widget.suffixIcon
+                        : Icon(Icons.visibility_off))
+                    : widget.suffixIcon),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
             ),
           ),
         ),

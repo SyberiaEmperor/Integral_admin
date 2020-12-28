@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
                 fontSize: ResponsiveSize.height(35.0),
               ),
             ),
+            iconTheme: IconThemeData(
+              color: Color(0xddFA7022),
+            ),
             primaryTextTheme: TextTheme(
               bodyText1: TextStyle(
                 fontFamily: 'Poppins',
