@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:integral_admin/entities/dish.dart';
 import 'package:meta/meta.dart';
 
 part 'dishedit_event.dart';

@@ -128,10 +128,10 @@ class _PictureAndPrice extends StatefulWidget {
   });
 
   @override
-  __PictureAndPriceState createState() => __PictureAndPriceState();
+  _PictureAndPriceState createState() => _PictureAndPriceState();
 }
 
-class __PictureAndPriceState extends State<_PictureAndPrice> {
+class _PictureAndPriceState extends State<_PictureAndPrice> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [

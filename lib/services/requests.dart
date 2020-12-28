@@ -30,7 +30,7 @@ class Requests {
       List<Dish> dishes = [];
       List<dynamic> body = response.data;
       body.forEach((element) {
-        dishes.add(Dish.fromData(element));
+        dishes.add(Dish.fromJson(element));
       });
       return dishes;
     } else {

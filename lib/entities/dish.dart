@@ -74,9 +74,9 @@ class Dish {
     );
   }
 
-  factory Dish.fromData(Map<String, dynamic> data) {
+  factory Dish.fromJson(Map<String, dynamic> data) {
     Set<Category> categories =
-        data['catedories'].map((number) => Category.values[number]).toList();
+        data['categories']?.map((number) => Category.values[number]);
     return Dish(
       categories: categories,
       description: data['description'],
@@ -85,6 +85,16 @@ class Dish {
       name: data['name'],
       price: data['price'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'price': price,
+      'categories': _categories.map((e) => e.index),
+      'picurl': (url.length > 100) ? 'data:image/jpeg;base64,' + url : url,
+    };
   }
 }
 
