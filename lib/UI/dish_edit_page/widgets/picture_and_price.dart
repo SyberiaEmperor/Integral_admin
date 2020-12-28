@@ -7,7 +7,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class PictureAndPrice extends StatefulWidget {
   final String picUrl;
-  final int dishPrice;
   final void Function(Uint8List) picChanged;
 
   final TextEditingController priceController;
@@ -15,7 +14,6 @@ class PictureAndPrice extends StatefulWidget {
 
   PictureAndPrice({
     @required this.picUrl,
-    @required this.dishPrice,
     @required this.picChanged,
     @required this.priceController,
     @required this.img,
@@ -54,7 +52,7 @@ class _PictureAndPriceState extends State<PictureAndPrice> {
               fit: BoxFit.fill,
               image: widget.img == null
                   ? (widget.picUrl == null
-                      ? AssetImage('asset/no_image.png')
+                      ? AssetImage('assets/no_image.jpg')
                       : CachedNetworkImageProvider(widget.picUrl))
                   : MemoryImage(widget.img),
             ),

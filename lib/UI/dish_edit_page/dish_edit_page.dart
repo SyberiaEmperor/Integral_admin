@@ -4,28 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:integral_admin/UI/dish_edit_page/widgets/button_bar.dart';
+import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
+import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 import 'widgets/picture_and_price.dart';
 
-class DishEditScreen extends StatelessWidget {
+class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
   final Dish _dish;
-  DisheditBloc bloc;
+  DisheditBloc _bloc;
 
   final TextEditingController price = TextEditingController();
   final TextEditingController descpription = TextEditingController();
   final TextEditingController name = TextEditingController();
+
+  String url;
   Set<Category> cats;
 
   Uint8List image;
 
   DishEditScreen(this._dish, {Key key}) : super(key: key) {
-    _setValues(_dish);
-    bloc = DisheditBloc(_dish);
+    print(Mode);
+    print(Mode is DishChange);
+    print(Mode is DishCreate);
+    if (Mode is DishChange) {
+      _setValues(_dish);
+    } else {
+      cats = Set<Category>();
+    }
+    _bloc = DisheditBloc(_dish);
   }
 
   void _setValues(Dish dish) {
@@ -33,6 +44,7 @@ class DishEditScreen extends StatelessWidget {
     descpription.text = _dish.description;
     name.text = _dish.name;
     cats = Set.from(_dish.categoriesSet);
+    url = _dish.url;
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -72,7 +84,7 @@ class DishEditScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: BlocConsumer(
-            cubit: bloc,
+            cubit: _bloc,
             listener: (context, state) {
               if (state is DishEditMainState) {
                 _setValues(state.dish);
@@ -117,8 +129,7 @@ class DishEditScreen extends StatelessWidget {
                         SizedBox(height: 20.height),
                         PictureAndPrice(
                           priceController: price,
-                          dishPrice: _dish.price,
-                          picUrl: _dish.url,
+                          picUrl: url,
                           img: image,
                           picChanged: (newPic) {
                             image = newPic;
@@ -155,9 +166,9 @@ class DishEditScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomButtonBar(
         leftFieldCallback: () => print('left'),
-        rightFieldCallback: () => bloc.add(DishEditingDone(
+        rightFieldCallback: () => _bloc.add(DishEditingDone(
             dish: Dish(
-          id: 'new',
+          id: _dish?.id,
           categories: cats,
           description: descpription.text,
           name: name.text,

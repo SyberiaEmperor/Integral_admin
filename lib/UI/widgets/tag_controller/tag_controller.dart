@@ -28,7 +28,7 @@ class _TagControllerState extends State<TagController> {
   void fillTags() {
     tags = [
       ...(widget.categories
-          .map((category) => TagField(category, () {
+          ?.map((category) => TagField(category, () {
                 widget.removeCategory(category);
                 setState(() {});
               }))
