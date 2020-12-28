@@ -9,6 +9,7 @@ class Dish {
   final int price;
 
   List<String> get categories => _categories.map((e) => e.asString).toList();
+  Set<Category> get categoriesSet => _categories;
   bool containsCategory(Category category) {
     return _categories.contains(category);
   }
@@ -97,7 +98,11 @@ enum Category {
   sauce,
 }
 
-extension Str on Category {
+extension CategoriesExt on Category {
+  static List<Category> get excludeAll {
+    return Category.values.sublist(1);
+  }
+
   String get asString {
     switch (this) {
       case Category.all:

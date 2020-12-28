@@ -42,12 +42,15 @@ class _TagControllerState extends State<TagController> {
     super.initState();
     addButton = AddTagButton(
       addTag: () async {
-        print(widget.categories);
-        var new_tag = await Modal.mainBottomSheet(
-            context, Category.values.toSet().difference(widget.categories));
-        if (new_tag != null) {
-          widget.addCategory(new_tag);
-          setState(() {});
+        Set<Category> diff =
+            CategoriesExt.excludeAll.toSet().difference(widget.categories);
+        if (diff.isNotEmpty) {
+          //Теперь не выезжает лист. Если нужно будет другое поведение - заменить
+          Category new_tag = await Modal.mainBottomSheet(context, diff);
+          if (new_tag != null) {
+            widget.addCategory(new_tag);
+            setState(() {});
+          }
         }
       },
     );
@@ -62,7 +65,8 @@ class _TagControllerState extends State<TagController> {
   }
 }
 
-/*
+//TODO: Убрать закоментированный код
+/* 
 Future<void> addDialog(BuildContext context, List<Category> data, void Function(Category) add)
 {
   if(data.isEmpty)

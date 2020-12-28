@@ -19,19 +19,14 @@ class DishEditScreen extends StatelessWidget {
 
   Uint8List image;
 
-  bool first = true;
-
-  DishEditScreen(this._dish, {Key key}) : super(key: key);
+  DishEditScreen(this._dish, {Key key}) : super(key: key) {
+    price.text = _dish.price.toString();
+    descpription.text = _dish.description;
+    name.text = _dish.name;
+    cats = Set.from(_dish.categoriesSet);
+  }
   @override
   Widget build(BuildContext context) {
-    if (first) {
-      price.text = _dish.price.toString();
-      descpription.text = _dish.description;
-      name.text = _dish.name;
-      cats = Set.from(_dish.categories);
-      first = !first;
-    }
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
