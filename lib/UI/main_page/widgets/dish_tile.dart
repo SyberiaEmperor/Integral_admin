@@ -17,7 +17,7 @@ class DishTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DishEditScreen<DishCreate>(dish)));
+                  builder: (context) => DishEditScreen<DishChange>(dish)));
         },
         child: Container(
           //color: Colors.black,

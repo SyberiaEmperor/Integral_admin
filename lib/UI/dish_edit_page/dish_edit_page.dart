@@ -8,6 +8,7 @@ import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
+import 'package:integral_admin/entities/gallery_image_controller.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
@@ -21,6 +22,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
   final TextEditingController price = TextEditingController();
   final TextEditingController descpription = TextEditingController();
   final TextEditingController name = TextEditingController();
+  final GalleryImageController imageController = GalleryImageController();
 
   String url;
   Set<Category> cats;
@@ -29,14 +31,14 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
 
   DishEditScreen(this._dish, {Key key}) : super(key: key) {
     print(Mode);
-    print(Mode is DishChange);
-    print(Mode is DishCreate);
-    if (Mode is DishChange) {
+    print(Mode == DishChange);
+    print(Mode == DishCreate);
+    if (Mode == DishChange) {
       _setValues(_dish);
     } else {
       cats = Set<Category>();
     }
-    _bloc = DisheditBloc(_dish);
+    _bloc = DisheditBloc<Mode>(_dish);
   }
 
   void _setValues(Dish dish) {
@@ -128,6 +130,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                         ),
                         SizedBox(height: 20.height),
                         PictureAndPrice(
+                          imageController: imageController,
                           priceController: price,
                           picUrl: url,
                           img: image,

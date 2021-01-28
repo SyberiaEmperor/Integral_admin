@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:integral_admin/UI/widgets/image_form/image_form.dart';
+import 'package:integral_admin/entities/gallery_image_controller.dart';
 import 'package:integral_admin/services/images.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,6 +12,7 @@ class PictureAndPrice extends StatefulWidget {
   final void Function(Uint8List) picChanged;
 
   final TextEditingController priceController;
+  final GalleryImageController imageController;
   final Uint8List img;
 
   PictureAndPrice({
@@ -17,6 +20,7 @@ class PictureAndPrice extends StatefulWidget {
     @required this.picChanged,
     @required this.priceController,
     @required this.img,
+    this.imageController,
   });
 
   @override
@@ -34,7 +38,11 @@ class _PictureAndPriceState extends State<PictureAndPrice> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      GestureDetector(
+      ImageForm(
+        controller: widget.imageController,
+        picUrl: widget.picUrl,
+      ),
+      /*GestureDetector(
         onTap: () async {
           img = await Images.getImage();
           setState(() {});
@@ -58,7 +66,7 @@ class _PictureAndPriceState extends State<PictureAndPrice> {
             ),
           ),
         ),
-      ),
+      ),*/
       Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
