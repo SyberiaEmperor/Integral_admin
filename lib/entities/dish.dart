@@ -99,7 +99,9 @@ class Dish {
       'description': description,
       'price': price,
       'categories': (_categories.map((e) => e.index).toList()),
-      'picture': (url.length > 100) ? 'data:image/jpeg;base64,' + url : url,
+      'picture': url != null
+          ? ((url.length > 100) ? 'data:image/jpeg;base64,' + url : url)
+          : null,
     };
   }
 }

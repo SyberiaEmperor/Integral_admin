@@ -66,7 +66,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
         padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pop(context, false);
           },
           child: Container(
             height: ResponsiveSize.height(40),
@@ -98,13 +98,13 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
             listener: (context, state) {
               if (state is DishEditMainState) {
                 if (Mode == DishCreate) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 }
                 if (Mode == DishChange) _setValues(state.dish);
               }
               if (state is DishEditingCompleteState) {
                 if (state.successful) {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 } else {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(state.caption),
@@ -179,6 +179,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
             }),
       ),
       bottomNavigationBar: BottomButtonBar(
+        trashVisibility: Mode == DishChange,
         leftFieldCallback: () => print('left'),
         rightFieldCallback: () => _bloc.add(DishEditingDone(
             dish: Dish(

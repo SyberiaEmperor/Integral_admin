@@ -20,17 +20,22 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mainBloc = BlocProvider.of<MainPageBloc>(context);
+
     return SafeArea(
       child: GestureDetector(
         onTap: () => unfocus(context),
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await Navigator.push(
+              var status = await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
                           DishEditScreen<DishCreate>.create()));
+              if (status) {
+                mainBloc.add(Update());
+              }
               /*FormData formData = FormData.fromMap({
                 'name': 'dish',
                 'description': 'test description',
