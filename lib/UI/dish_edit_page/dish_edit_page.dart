@@ -29,7 +29,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
 
   Uint8List image;
 
-  DishEditScreen(this._dish, {Key key}) : super(key: key) {
+  DishEditScreen._(this._dish, {Key key}) : super(key: key) {
     print(Mode);
     print(Mode == DishChange);
     print(Mode == DishCreate);
@@ -41,12 +41,20 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     _bloc = DisheditBloc<Mode>(_dish);
   }
 
+  factory DishEditScreen.edit(Dish dish) {
+    return DishEditScreen<Mode>._(dish);
+  }
+
+  factory DishEditScreen.create() {
+    return DishEditScreen<Mode>._(null);
+  }
+
   void _setValues(Dish dish) {
     price.text = _dish.price.toString();
     descpription.text = _dish.description;
     name.text = _dish.name;
     cats = Set.from(_dish.categoriesSet);
-    url = _dish.url;
+    url = _dish.img_url;
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -89,7 +97,10 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
             cubit: _bloc,
             listener: (context, state) {
               if (state is DishEditMainState) {
-                _setValues(state.dish);
+                if (Mode == DishCreate) {
+                  Navigator.pop(context);
+                }
+                if (Mode == DishChange) _setValues(state.dish);
               }
               if (state is DishEditingCompleteState) {
                 if (state.successful) {
@@ -176,7 +187,9 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
           description: descpription.text,
           name: name.text,
           price: int.tryParse(price.text),
-          url: image.toString(),
+          url: (imageController.image != null
+              ? imageController.base64
+              : (Mode == DishCreate ? null : _dish.url)),
         ))),
       ),
     );

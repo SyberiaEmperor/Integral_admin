@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
+import 'package:integral_admin/services/requests.dart';
 import 'package:meta/meta.dart';
 
 part 'dishedit_event.dart';
@@ -21,8 +22,13 @@ class DisheditBloc<Mode extends DishEditMode>
     if (event is DishEditingDone) {
       yield DishEditLoadingState();
       try {
-        //TODO: Implement actions which depends on Mode
-        _dish = event.dish;
+        if (Mode == DishChange) {
+          await Requests.putDish(event.dish);
+        }
+        if (Mode == DishCreate) {
+          await Requests.postDish(event.dish);
+        }
+        //_dish = event.dish;
         successful = true;
       } on Exception {
         print('wooob');

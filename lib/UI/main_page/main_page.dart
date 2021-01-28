@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integral_admin/UI/dish_edit_page/dish_edit_page.dart';
 import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
 import 'package:integral_admin/UI/main_page/widgets/market_title.dart';
@@ -9,6 +10,7 @@ import 'package:integral_admin/UI/main_page/widgets/search.dart';
 import 'package:integral_admin/UI/orders_page/orders_page.dart';
 import 'package:integral_admin/blocs/main_page_bloc/mainpage_bloc.dart';
 import 'package:integral_admin/entities/dish.dart';
+import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class MainPage extends StatelessWidget {
@@ -24,9 +26,12 @@ class MainPage extends StatelessWidget {
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              /* Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DishCreateScreen()));*/
-              FormData formData = FormData.fromMap({
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DishEditScreen<DishCreate>.create()));
+              /*FormData formData = FormData.fromMap({
                 'name': 'dish',
                 'description': 'test description',
                 'picture':
@@ -38,7 +43,7 @@ class MainPage extends StatelessWidget {
                   'http://178.154.255.209:3777/dishes/',
                   data: formData,
                   options: Options(contentType: Headers.jsonContentType));
-              print(res);
+              print(res);*/
             },
             child: Icon(Icons.add),
           ),

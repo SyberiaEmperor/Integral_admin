@@ -1,9 +1,10 @@
 import 'package:integral_admin/models/dish_controller.dart';
+import 'package:integral_admin/services/requests.dart';
 
 import 'dish.dart';
 
 class TestDishController implements DishController {
-  final List<Dish> _dishes = [
+  List<Dish> _dishes = [
     Dish.testDish(),
     Dish.testDish2(),
     Dish.testDish3(),
@@ -30,5 +31,7 @@ class TestDishController implements DishController {
   }
 
   @override
-  Future<void> updateDishes() async {}
+  Future<void> updateDishes() async {
+    _dishes = await Requests.getDishes();
+  }
 }

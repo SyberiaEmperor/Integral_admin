@@ -17,7 +17,7 @@ class DishTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DishEditScreen<DishChange>(dish)));
+                  builder: (context) => DishEditScreen<DishChange>.edit(dish)));
         },
         child: Container(
           //color: Colors.black,
@@ -52,7 +52,7 @@ class DishTile extends StatelessWidget {
                         width: ResponsiveSize.width(100.83),
                         height: ResponsiveSize.height(88),
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage(dish.url),
+                          backgroundImage: NetworkImage(dish.img_url),
                         )),
                   ),
                   Column(

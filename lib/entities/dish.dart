@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:integral_admin/services/requests.dart';
 
 class Dish {
   final String id;
@@ -6,6 +9,7 @@ class Dish {
   final String description;
   final Set<Category> _categories;
   final String url;
+  String img_url;
   final int price;
 
   List<String> get categories => _categories.map((e) => e.asString).toList();
@@ -20,7 +24,8 @@ class Dish {
       @required this.description,
       @required Set<Category> categories,
       @required this.url,
-      @required this.price})
+      @required this.price,
+      String this.img_url})
       : _categories = categories;
 
   static Dish testDish() {
@@ -75,13 +80,14 @@ class Dish {
   }
 
   factory Dish.fromJson(Map<String, dynamic> data) {
-    Set<Category> categories =
-        data['categories']?.map((number) => Category.values[number]);
+    Set<Category> categories = Set<Category>.from(
+        data['categories'].map((number) => Category.values[number]));
     return Dish(
       categories: categories,
       description: data['description'],
-      url: data['url'],
-      id: data['id'],
+      url: data['picture']['url'],
+      img_url: Requests.BASE_URI + data['picture']['url'],
+      id: data['id'].toString(),
       name: data['name'],
       price: data['price'],
     );
@@ -92,8 +98,8 @@ class Dish {
       'name': name,
       'description': description,
       'price': price,
-      'categories': _categories.map((e) => e.index),
-      'picurl': (url.length > 100) ? 'data:image/jpeg;base64,' + url : url,
+      'categories': (_categories.map((e) => e.index).toList()),
+      'picture': (url.length > 100) ? 'data:image/jpeg;base64,' + url : url,
     };
   }
 }
