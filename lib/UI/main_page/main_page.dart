@@ -36,19 +36,6 @@ class MainPage extends StatelessWidget {
               if (status) {
                 mainBloc.add(Update());
               }
-              /*FormData formData = FormData.fromMap({
-                'name': 'dish',
-                'description': 'test description',
-                'picture':
-                    'https://www.forumdaily.com/wp-content/uploads/2016/08/Depositphotos_41466555_m-2015.jpg',
-                'categories': [2, 3],
-                'price': 100,
-              });
-              Response res = await Dio().post(
-                  'http://178.154.255.209:3777/dishes/',
-                  data: formData,
-                  options: Options(contentType: Headers.jsonContentType));
-              print(res);*/
             },
             child: Icon(Icons.add),
           ),

@@ -18,10 +18,16 @@ class DisheditBloc<Mode extends DishEditMode>
   Stream<DisheditState> mapEventToState(
     DisheditEvent event,
   ) async* {
-    bool successful = false;
+    bool successful = true;
+    String caption = '';
     if (event is DishEditingDone) {
       yield DishEditLoadingState();
+
       try {
+        if (!checkFields(event.dish)) {
+          throw WrongFieldException('Некорректные поля');
+        }
+
         if (Mode == DishChange) {
           await Requests.putDish(event.dish);
         }
@@ -29,12 +35,32 @@ class DisheditBloc<Mode extends DishEditMode>
           await Requests.postDish(event.dish);
         }
         //_dish = event.dish;
-        successful = true;
-      } on Exception {
-        print('wooob');
+        //successful = true;
+      } on RequestException catch (e) {
+        successful = false;
+        caption = e.message;
+      } on WrongFieldException catch (e) {
+        successful = false;
+        caption = e.message;
       }
-      yield DishEditingCompleteState(successful);
+
+      yield DishEditingCompleteState(successful, caption: caption);
       yield DishEditMainState(_dish);
     }
   }
+
+  bool checkFields(Dish dish) {
+    bool result = true;
+    result = result && (dish.price != null && dish.price > 0);
+    result = result && (dish.name != null && dish.name.isNotEmpty);
+    result = result && dish.categories.isNotEmpty;
+
+    return result;
+  }
+}
+
+class WrongFieldException implements Exception {
+  final String message;
+
+  WrongFieldException(this.message);
 }
