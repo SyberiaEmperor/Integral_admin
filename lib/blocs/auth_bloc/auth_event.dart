@@ -4,10 +4,10 @@ part of 'auth_bloc.dart';
 abstract class AuthEvent {}
 
 class AuthLogInEvent extends AuthEvent {
-  final String login;
-  final String password;
+  final AuthData data;
 
-  AuthLogInEvent({@required this.login, @required this.password});
+  AuthLogInEvent({@required String login, @required String password})
+      : data = AuthData(login: login, password: password);
 }
 
 class AuthFirstCheckEvent extends AuthEvent {}

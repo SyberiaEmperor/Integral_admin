@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:integral_admin/entities/auth_data.dart';
+import 'package:integral_admin/entities/user.dart';
+import 'package:integral_admin/entities/user_repository.dart';
 import 'package:integral_admin/models/authentification.dart';
 import 'package:integral_admin/models/user_data_repository.dart';
 import 'package:integral_admin/utils/auth_exceptions.dart';
@@ -24,17 +26,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
+    yield AuthInProgressState();
     if (event is AuthFirstCheckEvent) {
       AuthData data = await _urp.getData();
       if (data != null) {
-        try {
-          await _loginService.logIn(data);
-        } on AuthException catch (exception) {
-          yield AuthErrorState(exception.message);
-        } on Exception {
-          rethrow;
-        }
+        yield await logIn(data);
       }
+    }
+    if (event is AuthLogInEvent) {
+      yield await logIn(event.data);
+    }
+    yield AuthMainState();
+  }
+
+  Future<AuthState> logIn(AuthData data) async {
+    try {
+      User user = await _loginService.logIn(data);
+      UserRepository.setUser(user);
+      return AuthLoggedInState();
+    } on AuthException catch (exception) {
+      return AuthErrorState(exception.message);
+    } on Exception {
+      rethrow;
     }
   }
 }

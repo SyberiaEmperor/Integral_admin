@@ -12,3 +12,5 @@ class AuthErrorState extends AuthState {
 
   AuthErrorState(this.caption);
 }
+
+class AuthLoggedInState extends AuthState {}
