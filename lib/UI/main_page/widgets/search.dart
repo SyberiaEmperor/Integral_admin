@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Search extends StatelessWidget {
+  final Function onEditingComplete;
+
+  final TextEditingController controller;
+
+  Search({Key key, this.onEditingComplete, this.controller}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,6 +17,8 @@ class Search extends StatelessWidget {
       width: ResponsiveSize.width(345),
       height: ResponsiveSize.height(45),
       child: TextField(
+        controller: controller,
+        onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(bottom: 1, top: 3),
           border: OutlineInputBorder(

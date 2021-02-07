@@ -31,7 +31,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
       _currentCategory = event.category;
       _currentDishes = dishController.byCategory(_currentCategory);
     } else if (event is SearchEvent) {
-      _currentDishes = dishController.search(event.text);
+      _currentDishes = dishController.search(event.text.toLowerCase());
     }
     yield MainPageInitialState(
         dishes: _currentDishes, category: _currentCategory);

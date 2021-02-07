@@ -18,8 +18,22 @@ class TestDishController implements DishController {
 
   @override
   List<Dish> search(String text) {
-    //TODO: Доделать поиск по другим полям
-    return _dishes.where((dish) => dish.description.contains(text)).toList();
+    List<Dish> result = [];
+
+    for (var dish in _dishes) {
+      if (result.contains(dish)) continue;
+
+      if (dish.name.toLowerCase().contains(text)) {
+        result.add(dish);
+      } else if (dish.description.toLowerCase().contains(text)) {
+        result.add(dish);
+      } else if (dish.categories
+          .any((element) => element.toLowerCase().contains(text))) {
+        result.add(dish);
+      }
+    }
+
+    return result;
   }
 
   @override
