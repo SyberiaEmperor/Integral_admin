@@ -25,11 +25,12 @@ class InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<InputField> {
-  bool passwordVisible = false;
+  bool passwordVisible;
   Function suffixAction;
 
   @override
   void initState() {
+    passwordVisible = !widget.isPassword;
     if (widget.isPassword) {
       suffixAction = () {
         passwordVisible = !passwordVisible;
