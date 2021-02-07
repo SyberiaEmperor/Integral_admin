@@ -14,6 +14,8 @@ import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class MainPage extends StatelessWidget {
+  final TextEditingController search = TextEditingController();
+
   void unfocus(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -89,7 +91,12 @@ class MainPage extends StatelessWidget {
                             flexibleSpace: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Search(),
+                                Search(
+                                  controller: search,
+                                  onEditingComplete: () {
+                                    mainBloc.add(SearchEvent(search.text));
+                                  },
+                                ),
                                 SizedBox(height: ResponsiveSize.height(24)),
                                 Categories(
                                   categories: Category.values,
