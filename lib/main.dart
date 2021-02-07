@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthBloc(
             TestUserDataRepository(),
             TestAuthentication(),
-          ),
+          )..add(AuthFirstCheckEvent()),
           child: AuthPage(),
         );
       }),
