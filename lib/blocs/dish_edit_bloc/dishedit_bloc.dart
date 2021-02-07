@@ -27,7 +27,6 @@ class DisheditBloc<Mode extends DishEditMode>
         if (!checkFields(event.dish)) {
           throw WrongFieldException('Некорректные поля');
         }
-
         if (Mode == DishChange) {
           await Requests.putDish(event.dish);
         }
