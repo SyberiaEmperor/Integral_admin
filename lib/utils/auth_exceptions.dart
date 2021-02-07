@@ -1,3 +1,4 @@
-class AuthException implements Exception {}
-
-class InvalidData extends AuthException {}
+class AuthException implements Exception {
+  final String message;
+  AuthException(this.message) : super();
+}
