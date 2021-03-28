@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class BottomButtonBar extends StatelessWidget {
+  //TODO: Add work with visibility
   final void Function() leftFieldCallback;
   final void Function() rightFieldCallback;
   final bool? trashVisibility;

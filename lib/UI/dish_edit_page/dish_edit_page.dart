@@ -28,6 +28,8 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
 
   Uint8List? image;
 
+  bool visible = true;
+
   DishEditScreen._(this._dish, {Key? key}) : super(key: key) {
     print(Mode);
     print(Mode == DishChange);
@@ -54,6 +56,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     name.text = dish.name;
     cats = Set.from(dish.categories);
     url = dish.url;
+    visible = dish.visible;
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -108,7 +111,6 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                   Navigator.of(context).pop(true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //TODO: Check. It was Scaffold.of(context)
                     content: Text(state.caption),
                   ));
                 }
@@ -185,6 +187,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
         leftFieldCallback: () => print('left'),
         rightFieldCallback: () => _bloc!.add(DishEditingDone(
             dish: Dish(
+          visible: visible,
           id: _dish?.id ?? 'undefined',
           categories: cats!,
           description: descpription.text,

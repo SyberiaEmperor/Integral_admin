@@ -6,6 +6,7 @@ class Dish {
   final String description;
   final Set<Category> _categories;
   final String? url;
+  final bool visible;
   final int price;
 
   List<String> get categories => _categories.map((e) => e.asString).toList();
@@ -20,6 +21,7 @@ class Dish {
       required this.description,
       required Set<Category> categories,
       required this.url,
+      required this.visible,
       required this.price})
       : _categories = categories;
 
@@ -33,6 +35,7 @@ class Dish {
         Category.drinks,
         Category.bread
       },
+      visible: true,
       description:
           'Восхитительное блюдо! Пальчики оближешь и попросишь ещё этих мягких французских булочек, да выпьешь чаю. Нужно ещё больше букв, потому опишу я наш проект: Два приложения. В одном ты контролируешь блюда, в другом же - делаешь заказы, смотришь, что там и как, какие блюда есть, а каких нет.',
       id: '1',
@@ -50,6 +53,7 @@ class Dish {
         Category.plate,
         Category.sauce,
       },
+      visible: false,
       description:
           'Восхитительное блюдо! Пальчики оближешь и попросишь ещё этих мягких французских булочек, да выпьешь чаю. Нужно ещё больше букв, потому опишу я наш проект: Два приложения. В одном ты контролируешь блюда, в другом же - делаешь заказы, смотришь, что там и как, какие блюда есть, а каких нет.',
       id: '2',
@@ -67,6 +71,7 @@ class Dish {
       description:
           'Восхитительное блюдо! Пальчики оближешь и попросишь ещё этих мягких французских булочек, да выпьешь чаю. Нужно ещё больше букв, потому опишу я наш проект: Два приложения. В одном ты контролируешь блюда, в другом же - делаешь заказы, смотришь, что там и как, какие блюда есть, а каких нет.',
       id: '3',
+      visible: true,
       name: 'Тестовое блюдо 3',
       price: 111,
       url:
@@ -95,6 +100,7 @@ class Dish {
       url: Requests.BASE_URI + data['picture']['url'],
       id: data['id'].toString(),
       name: data['name'],
+      visible: data['visible'],
       price: data['price'],
     );
   }
