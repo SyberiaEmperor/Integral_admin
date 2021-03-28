@@ -6,7 +6,7 @@ import 'package:integral_admin/entities/user.dart';
 import 'package:integral_admin/entities/user_repository.dart';
 import 'package:integral_admin/models/authentification.dart';
 import 'package:integral_admin/models/user_data_repository.dart';
-import 'package:integral_admin/utils/auth_exceptions.dart';
+import 'package:integral_admin/utils/exceptions/auth_exceptions.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
