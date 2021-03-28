@@ -7,6 +7,7 @@ import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
 import 'package:integral_admin/UI/main_page/widgets/market_title.dart';
 import 'package:integral_admin/UI/main_page/widgets/search.dart';
 import 'package:integral_admin/UI/orders_page/orders_page.dart';
+import 'package:integral_admin/UI/routes/orders_page_route.dart';
 import 'package:integral_admin/blocs/main_page_bloc/mainpage_bloc.dart';
 import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
@@ -47,21 +48,24 @@ class MainPage extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrdersPage()));
+                  Navigator.push(
+                    context,
+                    OrdersPageRoute(),
+                  );
                 },
                 child: Container(
-                    height: ResponsiveSize.height(40),
-                    width: ResponsiveSize.width(30),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Theme.of(context).accentColor,
-                    ),
-                    child: Icon(
-                      Icons.description,
-                      size: 20,
-                      color: Colors.white,
-                    )),
+                  height: ResponsiveSize.height(40),
+                  width: ResponsiveSize.width(30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Theme.of(context).accentColor,
+                  ),
+                  child: Icon(
+                    Icons.description,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
