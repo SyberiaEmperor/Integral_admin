@@ -4,7 +4,7 @@ import 'auth_data.dart';
 
 class SharedPreferencessRepository extends UserDataRepository {
   @override
-  Future<AuthData>? getData() {
+  Future<AuthData?> getData() async {
     print('Unimplemented!');
     return null;
   }

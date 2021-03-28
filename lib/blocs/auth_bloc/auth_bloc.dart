@@ -4,23 +4,24 @@ import 'package:bloc/bloc.dart';
 import 'package:integral_admin/entities/auth_data.dart';
 import 'package:integral_admin/entities/user.dart';
 import 'package:integral_admin/entities/user_repository.dart';
-import 'package:integral_admin/models/authentification.dart';
+import 'package:integral_admin/models/authentication.dart';
 import 'package:integral_admin/models/user_data_repository.dart';
 import 'package:integral_admin/utils/exceptions/auth_exceptions.dart';
 import 'package:meta/meta.dart';
+import 'package:pedantic/pedantic.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
-      UserDataRepository dataRepository, AuthentificationInterface loginService)
+      UserDataRepository dataRepository, AuthenticationInterface loginService)
       : _urp = dataRepository,
         _loginService = loginService,
         super(AuthMainState());
 
   final UserDataRepository _urp;
-  final AuthentificationInterface _loginService;
+  final AuthenticationInterface _loginService;
 
   @override
   Stream<AuthState> mapEventToState(
@@ -43,6 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       User user = await _loginService.logIn(data);
       UserRepository.setUser(user);
+      unawaited(_urp.setData(data));
       return AuthLoggedInState();
     } on AuthException catch (exception) {
       return AuthErrorState(exception.message);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integral_admin/UI/auth_page/auth_page.dart';
+import 'package:integral_admin/blocs/auth_bloc/auth_bloc.dart';
+import 'package:integral_admin/entities/test_authentication.dart';
+import 'package:integral_admin/entities/test_user_data_repository.dart';
 import 'package:integral_admin/services/requests.dart';
 import 'package:integral_admin/services/responsive_size.dart';
-
-import 'UI/main_page/main_page.dart';
-import 'blocs/main_page_bloc/mainpage_bloc.dart';
-import 'entities/test_dish_controller.dart';
 
 void main() {
   Requests.initReqs();
@@ -69,9 +69,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: Builder(builder: (context) {
         return BlocProvider(
-          create: (context) =>
-              MainPageBloc(dishController: TestDishController()),
-          child: MainPage(),
+          create: (context) => AuthBloc(
+            TestUserDataRepository(),
+            TestAuthentication(),
+          )..add(AuthFirstCheckEvent()),
+          child: AuthPage(),
         );
       }),
     );

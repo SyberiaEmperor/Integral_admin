@@ -30,6 +30,7 @@ class _InputFieldState extends State<InputField> {
 
   @override
   void initState() {
+    passwordVisible = !widget.isPassword;
     if (widget.isPassword) {
       suffixAction = () {
         passwordVisible = !passwordVisible;
