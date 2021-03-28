@@ -61,7 +61,7 @@ class DishTile extends StatelessWidget {
                         width: ResponsiveSize.width(100.83),
                         height: ResponsiveSize.height(88),
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage(dish.img_url!),
+                          backgroundImage: NetworkImage(dish.url!),
                         )),
                   ),
                   Column(
@@ -71,7 +71,7 @@ class DishTile extends StatelessWidget {
                       Container(
                         width: ResponsiveSize.width(103),
                         child: Text(
-                          dish.name!,
+                          dish.name,
                           style: Theme.of(context).accentTextTheme.bodyText2,
                         ),
                       ),
@@ -80,7 +80,7 @@ class DishTile extends StatelessWidget {
                         width: ResponsiveSize.width(100),
                         height: ResponsiveSize.height(16),
                         child: Text(
-                          dish.description!,
+                          dish.description,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).accentTextTheme.bodyText1,
                         ),

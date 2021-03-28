@@ -33,7 +33,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     print(Mode == DishChange);
     print(Mode == DishCreate);
     if (Mode == DishChange) {
-      _setValues(_dish);
+      _setValues(_dish!);
     } else {
       cats = Set<Category>();
     }
@@ -48,12 +48,12 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     return DishEditScreen<Mode>._(null);
   }
 
-  void _setValues(Dish? dish) {
-    price.text = _dish!.price.toString();
-    descpription.text = _dish!.description!;
-    name.text = _dish!.name!;
-    cats = Set.from(_dish!.categoriesSet!);
-    url = _dish!.img_url;
+  void _setValues(Dish dish) {
+    price.text = dish.price.toString();
+    descpription.text = dish.description;
+    name.text = dish.name;
+    cats = Set.from(dish.categories);
+    url = dish.url;
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -100,7 +100,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                   // Navigator.pop(context);
                 }
                 if (Mode == DishChange) {
-                  _setValues(state.dish);
+                  _setValues(state.dish!);
                 }
               }
               if (state is DishEditingCompleteState) {
@@ -185,11 +185,11 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
         leftFieldCallback: () => print('left'),
         rightFieldCallback: () => _bloc!.add(DishEditingDone(
             dish: Dish(
-          id: _dish?.id,
-          categories: cats,
+          id: _dish?.id ?? 'undefined',
+          categories: cats!,
           description: descpription.text,
           name: name.text,
-          price: int.tryParse(price.text),
+          price: int.tryParse(price.text) ?? 0,
           url: (imageController.image != null
               ? imageController.base64
               : (Mode == DishCreate ? null : _dish!.url)),

@@ -1,28 +1,26 @@
 import 'package:integral_admin/services/requests.dart';
 
 class Dish {
-  final String? id;
-  final String? name;
-  final String? description;
-  final Set<Category>? _categories;
+  final String id;
+  final String name;
+  final String description;
+  final Set<Category> _categories;
   final String? url;
-  String? img_url;
-  final int? price;
+  final int price;
 
-  List<String> get categories => _categories!.map((e) => e.asString).toList();
-  Set<Category>? get categoriesSet => _categories;
-  bool containsCategory(Category? category) {
-    return _categories!.contains(category);
+  List<String> get categories => _categories.map((e) => e.asString).toList();
+
+  bool containsCategory(Category category) {
+    return _categories.contains(category);
   }
 
   Dish(
       {required this.id,
       required this.name,
       required this.description,
-      required Set<Category>? categories,
+      required Set<Category> categories,
       required this.url,
-      required this.price,
-      this.img_url})
+      required this.price})
       : _categories = categories;
 
   static Dish testDish() {
@@ -76,30 +74,29 @@ class Dish {
     );
   }
 
-  factory Dish.fromJson(Map<String, dynamic> data) {
-    Set<Category> categories = Set<Category>.from(
-        data['categories'].map((number) => Category.values[number]));
-    return Dish(
-      categories: categories,
-      description: data['description'],
-      url: data['picture']['url'],
-      img_url: Requests.BASE_URI + data['picture']['url'],
-      id: data['id'].toString(),
-      name: data['name'],
-      price: data['price'],
-    );
-  }
-
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'description': description,
       'price': price,
-      'categories': (_categories!.map((e) => e.index).toList()),
+      'categories': (_categories.map((e) => e.index).toList()),
       'picture': url != null
           ? ((url!.length > 100) ? 'data:image/jpeg;base64,' + url! : url)
           : null,
     };
+  }
+
+  factory Dish.fromData(Map<String, dynamic> data) {
+    Set<Category> categories = Set<Category>.from(
+        data['categories'].map((number) => Category.values[number]));
+    return Dish(
+      categories: categories,
+      description: data['description'],
+      url: Requests.BASE_URI + data['picture']['url'],
+      id: data['id'].toString(),
+      name: data['name'],
+      price: data['price'],
+    );
   }
 }
 
@@ -113,11 +110,7 @@ enum Category {
   sauce,
 }
 
-extension CategoriesExt on Category {
-  static List<Category> get excludeAll {
-    return Category.values.sublist(1);
-  }
-
+extension Str on Category {
   String get asString {
     switch (this) {
       case Category.all:
@@ -135,5 +128,11 @@ extension CategoriesExt on Category {
       case Category.salad:
         return 'Салаты';
     }
+  }
+}
+
+extension CategoriesExt on Category {
+  static List<Category> get excludeAll {
+    return Category.values.sublist(1);
   }
 }

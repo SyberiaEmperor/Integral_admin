@@ -42,8 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<AuthState> logIn(AuthData data) async {
     try {
-      User user = await _loginService.logIn(data);
-      UserRepository.setUser(user);
+      await _loginService.logIn(data);
       unawaited(_urp.setData(data));
       return AuthLoggedInState();
     } on AuthException catch (exception) {

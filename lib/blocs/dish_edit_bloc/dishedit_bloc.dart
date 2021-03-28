@@ -51,8 +51,8 @@ class DisheditBloc<Mode extends DishEditMode>
 
   bool checkFields(Dish dish) {
     bool result = true;
-    result = result && (dish.price != null && dish.price! > 0);
-    result = result && (dish.name != null && dish.name!.isNotEmpty);
+    result = result && (dish.price != null && dish.price > 0);
+    result = result && (dish.name != null && dish.name.isNotEmpty);
     result = result && dish.categories.isNotEmpty;
 
     return result;
