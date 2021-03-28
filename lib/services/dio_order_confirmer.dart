@@ -7,7 +7,7 @@ class DioOrderConfirmer implements OrderConfirmer {
 
   DioOrderConfirmer(this.orderId);
   @override
-  Future<FullOrder> updateStatus(int orderId) async {
+  Future<FullOrder> updateStatus() async {
     return Requests.confirmOrder(orderId);
   }
 }
