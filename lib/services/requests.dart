@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:integral_admin/entities/api/order_from_api.dart';
 import 'package:integral_admin/entities/auth_data.dart';
 import 'package:integral_admin/entities/dish.dart';
-import 'package:integral_admin/entities/user.dart';
 import 'package:integral_admin/resources/app_strings.dart';
 import 'package:integral_admin/utils/exceptions/auth_exceptions.dart';
 
@@ -14,6 +14,7 @@ class Requests {
 
   static const _DISHES = '/dishes';
   static const _USER = '/user';
+  static const _ORDERS = '/orders';
 
   static const _TOKEN = '/superuser_token';
 
@@ -70,7 +71,7 @@ class Requests {
 
     Response response = await _baseDio.get(path);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       List<Dish> dishes = [];
       List<dynamic> body = response.data;
       body.forEach((element) {
@@ -90,7 +91,7 @@ class Requests {
     Response response =
         await _baseDio.post(path, data: jsonEncode({'dish': dish.toJson()}));
     print(response.statusCode);
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return;
     } else {
       throw RequestException(response.statusCode.toString());
@@ -105,13 +106,40 @@ class Requests {
           await _baseDio.put(path, data: jsonEncode({'dish': dish.toJson()}));
 
       print(response.statusCode);
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         return;
       } else {
         throw RequestException(response.statusCode.toString());
       }
     } on DioError catch (error) {
       throw RequestException(error.message);
+    }
+  }
+
+  static Future<List<OrderFromApi>> getAllOrders() async {
+    Response response = await _jwtDio.get(_ORDERS);
+    if (response.statusCode == HttpStatus.ok) {
+      List<OrderFromApi> orders = (response.data as List<dynamic>)
+          .map((data) => OrderFromApi.fromJson(data))
+          .toList();
+      print(orders);
+      return orders;
+    }
+    throw RequestException('Ошибка во время получения заказов');
+  }
+
+  static Future<FullOrder> getOrderById(int id) async {
+    String path = buildPathForBaseUri([_ORDERS, "/", id.toString()]);
+
+    print(path);
+    Response response = await _jwtDio.get(path);
+
+    if (response.statusCode == HttpStatus.ok) {
+      Map<String, dynamic> body = response.data;
+      print(body);
+      return FullOrder.fromJson(body);
+    } else {
+      throw RequestException("Такого заказа не существует");
     }
   }
 }

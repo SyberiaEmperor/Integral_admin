@@ -15,15 +15,15 @@ class Dish {
     return _categories.contains(category);
   }
 
-  Dish(
-      {required this.id,
-      required this.name,
-      required this.description,
-      required Set<Category> categories,
-      required this.url,
-      required this.visible,
-      required this.price})
-      : _categories = categories;
+  Dish({
+    required this.id,
+    required this.name,
+    required this.description,
+    required Set<Category> categories,
+    required this.url,
+    required this.visible,
+    required this.price,
+  }) : _categories = categories;
 
   static Dish testDish() {
     return Dish(
