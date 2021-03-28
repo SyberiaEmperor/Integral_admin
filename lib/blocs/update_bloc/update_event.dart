@@ -6,3 +6,7 @@ abstract class UpdateEvent {}
 class RunUpdate extends UpdateEvent {
   RunUpdate._();
 }
+
+class SetData extends UpdateEvent {
+  SetData();
+}

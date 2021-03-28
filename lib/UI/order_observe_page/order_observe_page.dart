@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/widgets/back_button.dart';
+import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
 import 'package:integral_admin/entities/api/order_from_api.dart';
+import 'package:provider/provider.dart';
 
 class OrderObservePage extends StatelessWidget {
   final FullOrder order;
@@ -12,9 +14,13 @@ class OrderObservePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0.0,
-          leading: BackButtonLeading()),
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0.0,
+        leading: BackButtonLeading(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: context.read<UpdateBloc>().confirm,
+      ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,7 +38,7 @@ class OrderObservePage extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
             Text(
-              'Статус: ${order.orderQueue}',
+              'Статус: ${order.confirmed}',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],

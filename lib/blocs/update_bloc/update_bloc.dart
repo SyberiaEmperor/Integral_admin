@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:integral_admin/models/order_updater.dart';
 import 'package:integral_admin/models/updater.dart';
+import 'package:integral_admin/services/requests.dart';
 import 'package:meta/meta.dart';
 
 part 'update_event.dart';
@@ -12,12 +14,16 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
   ///An implementation of updater interface. Need to update values
   final Updater<DataType> updater;
 
+  late DataType _data;
+  final OrderConfirmer? confirmer;
+
   ///Cycle time
   final Duration updatePeriod;
 
   late Timer _updaterTimer;
 
-  UpdateBloc({required this.updater, required this.updatePeriod})
+  UpdateBloc(
+      {required this.updater, required this.updatePeriod, this.confirmer})
       : super(ShowLoader()) {
     _init();
   }
@@ -27,6 +33,19 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
     _updaterTimer = Timer.periodic(updatePeriod, (timer) {
       update();
     });
+  }
+
+  void setData() {
+    add(SetData());
+  }
+
+  void confirm() async {
+    try {
+      _data = await confirmer?.updateStatus() as DataType;
+      setData();
+    } on RequestException catch (e) {
+      print(e.message);
+    }
   }
 
   @override
@@ -45,8 +64,11 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
     UpdateEvent event,
   ) async* {
     if (event is RunUpdate) {
-      var data = await updater.update();
-      yield UpdateMainState(data);
+      _data = await updater.update();
+      yield UpdateMainState(_data);
+    }
+    if (event is SetData) {
+      yield UpdateMainState(_data);
     }
   }
 }

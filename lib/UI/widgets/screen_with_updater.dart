@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integral_admin/UI/widgets/loader.dart';
 import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
+import 'package:integral_admin/models/order_updater.dart';
 import 'package:integral_admin/models/updater.dart';
 
 class ScreenWithUpdater<DataType> extends StatefulWidget {
   final Updater<DataType> updater;
   final Widget Function(BuildContext, DataType) bodyBuilder;
   final Duration updatePeriod;
+  final OrderConfirmer? confirmer;
 
   const ScreenWithUpdater({
     Key? key,
     required this.updater,
     required this.bodyBuilder,
     required this.updatePeriod,
+    this.confirmer,
   }) : super(key: key);
   @override
   _ScreenWithUpdaterState createState() => _ScreenWithUpdaterState<DataType>();
@@ -32,9 +35,9 @@ class _ScreenWithUpdaterState<DataType>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _bloc = UpdateBloc(
-      updatePeriod: widget.updatePeriod,
-      updater: widget.updater,
-    );
+        updatePeriod: widget.updatePeriod,
+        updater: widget.updater,
+        confirmer: widget.confirmer);
   }
 
   @override

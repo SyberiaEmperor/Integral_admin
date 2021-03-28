@@ -160,8 +160,8 @@ class Requests {
 
   static Future<FullOrder> confirmOrder(int orderId) async {
     try {
-      String path =
-          buildPathForBaseUri([_ORDERS, '/', orderId.toString(), _CONFIRM]);
+      String path = buildPathForBaseUri(
+          [_ORDERS, '/', orderId.toString(), '/', _CONFIRM]);
 
       Response response = await _jwtDio.put(path);
 
