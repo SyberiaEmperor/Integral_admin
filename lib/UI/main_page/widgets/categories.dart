@@ -4,15 +4,15 @@ import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Categories extends StatelessWidget {
-  final Category selectedCategory;
+  final Category? selectedCategory;
   final List<Category> categories;
   final void Function(Category) onSelect;
 
   const Categories(
-      {@required this.categories,
-      @required this.selectedCategory,
-      @required this.onSelect,
-      Key key})
+      {required this.categories,
+      required this.selectedCategory,
+      required this.onSelect,
+      Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class Categories extends StatelessWidget {
                   child: Center(
                     child: Text(
                       categories[index].asString,
-                      style: (selectedCategory.index == index)
+                      style: (selectedCategory!.index == index)
                           ? theme.accentTextTheme.bodyText2
                           : theme.accentTextTheme.bodyText1,
                     ),

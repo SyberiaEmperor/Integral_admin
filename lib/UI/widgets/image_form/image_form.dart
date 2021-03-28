@@ -5,9 +5,9 @@ import 'package:integral_admin/services/responsive_size.dart';
 
 class ImageForm extends StatefulWidget {
   final ImageController controller;
-  final String picUrl;
+  final String? picUrl;
 
-  ImageForm({@required this.controller, this.picUrl});
+  ImageForm({required this.controller, this.picUrl});
 
   @override
   _ImageFormState createState() => _ImageFormState();
@@ -34,8 +34,9 @@ class _ImageFormState extends State<ImageForm> {
               fit: BoxFit.fill,
               image: widget.controller.image == null
                   ? (widget.picUrl == null
-                      ? AssetImage('assets/no_image.jpg')
-                      : CachedNetworkImageProvider(widget.picUrl))
+                          ? AssetImage('assets/no_image.jpg')
+                          : CachedNetworkImageProvider(widget.picUrl!))
+                      as ImageProvider<Object>
                   : MemoryImage(widget.controller.image),
             ),
           ),

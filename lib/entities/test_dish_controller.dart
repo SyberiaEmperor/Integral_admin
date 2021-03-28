@@ -23,9 +23,9 @@ class TestDishController implements DishController {
     for (var dish in _dishes) {
       if (result.contains(dish)) continue;
 
-      if (dish.name.toLowerCase().contains(text)) {
+      if (dish.name!.toLowerCase().contains(text)) {
         result.add(dish);
-      } else if (dish.description.toLowerCase().contains(text)) {
+      } else if (dish.description!.toLowerCase().contains(text)) {
         result.add(dish);
       } else if (dish.categories
           .any((element) => element.toLowerCase().contains(text))) {
@@ -37,7 +37,7 @@ class TestDishController implements DishController {
   }
 
   @override
-  List<Dish> byCategory(Category category) {
+  List<Dish> byCategory(Category? category) {
     if (category == Category.all) {
       return _dishes;
     }

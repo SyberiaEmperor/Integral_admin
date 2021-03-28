@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:integral_admin/UI/dish_edit_page/widgets/button_bar.dart';
-import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
@@ -16,20 +15,20 @@ import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 import 'widgets/picture_and_price.dart';
 
 class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
-  final Dish _dish;
-  DisheditBloc _bloc;
+  final Dish? _dish;
+  late final DisheditBloc? _bloc;
 
   final TextEditingController price = TextEditingController();
   final TextEditingController descpription = TextEditingController();
   final TextEditingController name = TextEditingController();
   final GalleryImageController imageController = GalleryImageController();
 
-  String url;
-  Set<Category> cats;
+  String? url;
+  Set<Category>? cats;
 
-  Uint8List image;
+  Uint8List? image;
 
-  DishEditScreen._(this._dish, {Key key}) : super(key: key) {
+  DishEditScreen._(this._dish, {Key? key}) : super(key: key) {
     print(Mode);
     print(Mode == DishChange);
     print(Mode == DishCreate);
@@ -49,12 +48,12 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     return DishEditScreen<Mode>._(null);
   }
 
-  void _setValues(Dish dish) {
-    price.text = _dish.price.toString();
-    descpription.text = _dish.description;
-    name.text = _dish.name;
-    cats = Set.from(_dish.categoriesSet);
-    url = _dish.img_url;
+  void _setValues(Dish? dish) {
+    price.text = _dish!.price.toString();
+    descpription.text = _dish!.description!;
+    name.text = _dish!.name!;
+    cats = Set.from(_dish!.categoriesSet!);
+    url = _dish!.img_url;
   }
 
   AppBar _buildAppBar(BuildContext context) {
@@ -94,25 +93,28 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: BlocConsumer(
-            cubit: _bloc,
-            listener: (context, state) {
+            bloc: _bloc,
+            listener: (context, dynamic state) {
               if (state is DishEditMainState) {
                 if (Mode == DishCreate) {
                   // Navigator.pop(context);
                 }
-                if (Mode == DishChange) _setValues(state.dish);
+                if (Mode == DishChange) {
+                  _setValues(state.dish);
+                }
               }
               if (state is DishEditingCompleteState) {
                 if (state.successful) {
                   Navigator.of(context).pop(true);
                 } else {
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //TODO: Check. It was Scaffold.of(context)
                     content: Text(state.caption),
                   ));
                 }
               }
             },
-            builder: (context, state) {
+            builder: (context, dynamic state) {
               if (state is DishEditLoadingState) {
                 return Column(
                   children: [
@@ -139,7 +141,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.height),
+                        SizedBox(height: 20.height as double?),
                         PictureAndPrice(
                           imageController: imageController,
                           priceController: price,
@@ -149,7 +151,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             image = newPic;
                           },
                         ),
-                        SizedBox(height: 20.height),
+                        SizedBox(height: 20.height as double?),
                         Text(
                           'Описание:\n\n',
                           style: Theme.of(context).primaryTextTheme.bodyText1,
@@ -167,7 +169,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.height),
+                        SizedBox(height: 20.height as double?),
                         TagController(
                           categories: cats,
                         ),
@@ -181,7 +183,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
       bottomNavigationBar: BottomButtonBar(
         trashVisibility: Mode == DishChange,
         leftFieldCallback: () => print('left'),
-        rightFieldCallback: () => _bloc.add(DishEditingDone(
+        rightFieldCallback: () => _bloc!.add(DishEditingDone(
             dish: Dish(
           id: _dish?.id,
           categories: cats,
@@ -190,7 +192,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
           price: int.tryParse(price.text),
           url: (imageController.image != null
               ? imageController.base64
-              : (Mode == DishCreate ? null : _dish.url)),
+              : (Mode == DishCreate ? null : _dish!.url)),
         ))),
       ),
     );

@@ -3,7 +3,7 @@ import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Modal {
-  static Category category;
+  static Category? category;
 
   static Future mainBottomSheet(BuildContext context, Set<Category> cats) {
     void mapToType(int index) {

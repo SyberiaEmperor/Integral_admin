@@ -10,9 +10,9 @@ part 'mainpage_state.dart';
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DishController dishController;
-  List<Dish> _currentDishes;
-  Category _currentCategory;
-  MainPageBloc({@required this.dishController}) : super(LoadingState()) {
+  List<Dish>? _currentDishes;
+  Category? _currentCategory;
+  MainPageBloc({required this.dishController}) : super(LoadingState()) {
     _currentCategory = Category.all;
     add(Update());
   }

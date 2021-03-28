@@ -5,7 +5,7 @@ class ConnectionErrorPage extends StatelessWidget {
   final String errorCaption;
   final Function onUpdateAction;
 
-  const ConnectionErrorPage({Key key, this.errorCaption, this.onUpdateAction})
+  const ConnectionErrorPage({Key? key, required this.errorCaption, required this.onUpdateAction})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class ConnectionErrorPage extends StatelessWidget {
         child: Column(
           children: [
             Text(errorCaption),
-            FlatButton(onPressed: onUpdateAction, child: Text('Обновить')),
+            TextButton(onPressed: onUpdateAction as void Function()?, child: Text('Обновить')),
           ],
         ),
       ),

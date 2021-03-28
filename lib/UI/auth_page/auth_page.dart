@@ -38,7 +38,7 @@ class AuthPage extends StatelessWidget {
                       'Войти',
                       style: Theme.of(context)
                           .primaryTextTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: Colors.white),
                     ),
                   ),

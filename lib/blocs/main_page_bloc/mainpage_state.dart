@@ -4,10 +4,10 @@ part of 'mainpage_bloc.dart';
 abstract class MainPageState {}
 
 class MainPageInitialState extends MainPageState {
-  final List<Dish> dishes;
-  final Category category;
+  final List<Dish>? dishes;
+  final Category? category;
 
-  MainPageInitialState({@required this.dishes, @required this.category});
+  MainPageInitialState({required this.dishes, required this.category});
 }
 
 class LoadingState extends MainPageState {}

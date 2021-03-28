@@ -12,7 +12,7 @@ class Requests {
 
   static const TIMEOUT = 5000;
 
-  static Dio _baseDio;
+  static late Dio _baseDio;
 
   static void initReqs() {
     _baseDio = Dio();

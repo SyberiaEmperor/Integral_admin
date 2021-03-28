@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async* {
     yield AuthInProgressState();
     if (event is AuthFirstCheckEvent) {
-      AuthData data = await _urp.getData();
+      AuthData? data = await _urp.getData();
       if (data != null) {
         yield await logIn(data);
       }

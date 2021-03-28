@@ -6,7 +6,7 @@ abstract class AuthEvent {}
 class AuthLogInEvent extends AuthEvent {
   final AuthData data;
 
-  AuthLogInEvent({@required String login, @required String password})
+  AuthLogInEvent({required String login, required String password})
       : data = AuthData(login: login, password: password);
 }
 

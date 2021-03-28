@@ -19,15 +19,11 @@ class Cart {
   }
 
   void add(Dish dish) {
-    if (_dishes.containsKey(dish)) {
-      _dishes[dish]++;
-      return;
-    }
-    _dishes[dish] = 1;
+    _dishes[dish] = (_dishes[dish] ?? 0) + 1;
   }
 
   void decrement(Dish dish) {
-    _dishes[dish]--;
+    _dishes[dish] = (_dishes[dish] ?? 1) - 1;
     if (_dishes[dish] == 0) {
       delete(dish);
     }

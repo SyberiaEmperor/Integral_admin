@@ -8,7 +8,7 @@ import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 class DishCreateScreen extends StatefulWidget {
-  DishCreateScreen({Key key}) : super(key: key);
+  DishCreateScreen({Key? key}) : super(key: key);
 
   @override
   _DishCreateScreenState createState() => _DishCreateScreenState();
@@ -21,7 +21,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
 
   final TextEditingController name = TextEditingController();
 
-  Uint8List image;
+  Uint8List? image;
 
   Set<Category> cats = {};
 
@@ -74,12 +74,12 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.height),
+                  SizedBox(height: 20.height as double?),
                   _PictureAndPrice(
                     priceController: price,
                     img: image,
                   ),
-                  SizedBox(height: 20.height),
+                  SizedBox(height: 20.height as double?),
                   Text(
                     'Описание:\n\n',
                     style: Theme.of(context).primaryTextTheme.bodyText1,
@@ -97,7 +97,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.height),
+                  SizedBox(height: 20.height as double?),
                   TagController(
                     categories: cats,
                   ),
@@ -117,11 +117,11 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
 
 class _PictureAndPrice extends StatefulWidget {
   final TextEditingController priceController;
-  final Uint8List img;
+  final Uint8List? img;
 
   _PictureAndPrice({
-    @required this.priceController,
-    @required this.img,
+    required this.priceController,
+    required this.img,
   });
 
   @override
@@ -129,7 +129,7 @@ class _PictureAndPrice extends StatefulWidget {
 }
 
 class __PictureAndPriceState extends State<_PictureAndPrice> {
-  Uint8List img;
+  Uint8List? img;
   @override
   void initState() {
     super.initState();
@@ -146,7 +146,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
         },
         child: Container(
           width: double.infinity,
-          height: 281.height,
+          height: 281.height as double?,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
@@ -154,9 +154,9 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
             ),
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: img == null
+              image: (img == null
                   ? AssetImage('assets/no_image.jpg')
-                  : MemoryImage(widget.img),
+                  : MemoryImage(widget.img!)) as ImageProvider<Object>,
             ),
           ),
         ),
@@ -165,7 +165,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          border: Border.all(color: Colors.blueGrey[100], width: 0),
+          border: Border.all(color: Colors.blueGrey[100]!, width: 0),
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),
@@ -208,7 +208,7 @@ class _ButtonBar extends StatelessWidget {
   final void Function() rightFieldCallback;
 
   const _ButtonBar(
-      {@required this.leftFieldCallback, @required this.rightFieldCallback});
+      {required this.leftFieldCallback, required this.rightFieldCallback});
   @override
   Widget build(BuildContext context) {
     return Row(

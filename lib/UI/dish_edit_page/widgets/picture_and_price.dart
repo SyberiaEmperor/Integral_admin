@@ -3,24 +3,21 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/widgets/image_form/image_form.dart';
 import 'package:integral_admin/entities/gallery_image_controller.dart';
-import 'package:integral_admin/services/images.dart';
-import 'package:integral_admin/services/responsive_size.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class PictureAndPrice extends StatefulWidget {
-  final String picUrl;
+  final String? picUrl;
   final void Function(Uint8List) picChanged;
 
   final TextEditingController priceController;
   final GalleryImageController imageController;
-  final Uint8List img;
+  final Uint8List? img;
 
   PictureAndPrice({
-    @required this.picUrl,
-    @required this.picChanged,
-    @required this.priceController,
-    @required this.img,
-    this.imageController,
+    required this.picUrl,
+    required this.picChanged,
+    required this.priceController,
+    required this.img,
+    required this.imageController,
   });
 
   @override
@@ -28,7 +25,7 @@ class PictureAndPrice extends StatefulWidget {
 }
 
 class _PictureAndPriceState extends State<PictureAndPrice> {
-  Uint8List img;
+  Uint8List? img;
   @override
   void initState() {
     super.initState();
@@ -71,7 +68,7 @@ class _PictureAndPriceState extends State<PictureAndPrice> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          border: Border.all(color: Colors.blueGrey[100], width: 0),
+          border: Border.all(color: Colors.blueGrey[100]!, width: 0),
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),

@@ -8,7 +8,7 @@ class InputField extends StatefulWidget {
   final TextEditingController controller;
 
   InputField(this.controller,
-      {this.hint, this.suffixIcon, this.isPassword = false});
+      {required this.hint, required this.suffixIcon, this.isPassword = false});
 
   InputField.emailField(this.controller)
       : hint = 'Email',
@@ -26,7 +26,7 @@ class InputField extends StatefulWidget {
 
 class _InputFieldState extends State<InputField> {
   bool passwordVisible = false;
-  Function suffixAction;
+  Function? suffixAction;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _InputFieldState extends State<InputField> {
           decoration: InputDecoration(
             hintText: widget.hint,
             suffixIcon: GestureDetector(
-                onTap: suffixAction,
+                onTap: suffixAction as void Function()?,
                 child: widget.isPassword
                     ? (passwordVisible
                         ? widget.suffixIcon

@@ -1,29 +1,28 @@
-import 'package:flutter/material.dart';
 import 'package:integral_admin/services/requests.dart';
 
 class Dish {
-  final String id;
-  final String name;
-  final String description;
-  final Set<Category> _categories;
-  final String url;
-  String img_url;
-  final int price;
+  final String? id;
+  final String? name;
+  final String? description;
+  final Set<Category>? _categories;
+  final String? url;
+  String? img_url;
+  final int? price;
 
-  List<String> get categories => _categories.map((e) => e.asString).toList();
-  Set<Category> get categoriesSet => _categories;
-  bool containsCategory(Category category) {
-    return _categories.contains(category);
+  List<String> get categories => _categories!.map((e) => e.asString).toList();
+  Set<Category>? get categoriesSet => _categories;
+  bool containsCategory(Category? category) {
+    return _categories!.contains(category);
   }
 
   Dish(
-      {@required this.id,
-      @required this.name,
-      @required this.description,
-      @required Set<Category> categories,
-      @required this.url,
-      @required this.price,
-      String this.img_url})
+      {required this.id,
+      required this.name,
+      required this.description,
+      required Set<Category>? categories,
+      required this.url,
+      required this.price,
+      this.img_url})
       : _categories = categories;
 
   static Dish testDish() {
@@ -96,9 +95,9 @@ class Dish {
       'name': name,
       'description': description,
       'price': price,
-      'categories': (_categories.map((e) => e.index).toList()),
+      'categories': (_categories!.map((e) => e.index).toList()),
       'picture': url != null
-          ? ((url.length > 100) ? 'data:image/jpeg;base64,' + url : url)
+          ? ((url!.length > 100) ? 'data:image/jpeg;base64,' + url! : url)
           : null,
     };
   }
@@ -136,6 +135,5 @@ extension CategoriesExt on Category {
       case Category.salad:
         return 'Салаты';
     }
-    throw FormatException('Incorrect input data');
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 
 class Search extends StatelessWidget {
-  final Function onEditingComplete;
+  final Function? onEditingComplete;
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
-  Search({Key key, this.onEditingComplete, this.controller}) : super(key: key);
+  Search({Key? key, this.onEditingComplete, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class Search extends StatelessWidget {
       height: ResponsiveSize.height(45),
       child: TextField(
         controller: controller,
-        onEditingComplete: onEditingComplete,
+        onEditingComplete: onEditingComplete as void Function()?,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(bottom: 1, top: 3),
           border: OutlineInputBorder(
@@ -32,7 +32,7 @@ class Search extends StatelessWidget {
             height: ResponsiveSize.height(20),
             child: Icon(
               Icons.search,
-              color: Theme.of(context).cursorColor,
+              color: Theme.of(context).textSelectionTheme.cursorColor,
             ),
           ),
           hintText: 'Поиск',

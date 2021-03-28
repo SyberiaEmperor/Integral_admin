@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:integral_admin/UI/auth_page/auth_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integral_admin/services/requests.dart';
 import 'package:integral_admin/services/responsive_size.dart';
@@ -23,12 +22,13 @@ class MyApp extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width);
         return Theme(
-          isMaterialAppTheme: true,
           data: ThemeData(
             primaryColor: Color(0xffF5F7FA),
             backgroundColor: Color(0xffFFFFFF),
             accentColor: Color(0xddFA7022),
-            cursorColor: Color(0xff435D6B),
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Color(0xff435D6B),
+            ),
             textTheme: TextTheme(
               bodyText1: TextStyle(
                 fontFamily: 'Poppins',
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
       title: 'Integral',

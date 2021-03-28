@@ -59,13 +59,13 @@ class OrderObservePage extends StatelessWidget {
         child: Column(
           children: [
             Center(
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: Text('Заказ выполнен'),
               ),
             ),
             Center(
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: Text('Отменить заказ'),
               ),

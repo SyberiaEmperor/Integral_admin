@@ -11,7 +11,8 @@ part 'dishedit_state.dart';
 
 class DisheditBloc<Mode extends DishEditMode>
     extends Bloc<DisheditEvent, DisheditState> {
-  Dish _dish;
+  // ignore: prefer_final_fields
+  Dish? _dish;
   DisheditBloc(this._dish) : super(DishEditMainState(_dish));
 
   @override
@@ -50,8 +51,8 @@ class DisheditBloc<Mode extends DishEditMode>
 
   bool checkFields(Dish dish) {
     bool result = true;
-    result = result && (dish.price != null && dish.price > 0);
-    result = result && (dish.name != null && dish.name.isNotEmpty);
+    result = result && (dish.price != null && dish.price! > 0);
+    result = result && (dish.name != null && dish.name!.isNotEmpty);
     result = result && dish.categories.isNotEmpty;
 
     return result;

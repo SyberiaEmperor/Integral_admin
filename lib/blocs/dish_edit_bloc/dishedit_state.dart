@@ -4,7 +4,7 @@ part of 'dishedit_bloc.dart';
 abstract class DisheditState {}
 
 class DishEditMainState extends DisheditState {
-  final Dish dish;
+  final Dish? dish;
   DishEditMainState(this.dish);
 }
 
