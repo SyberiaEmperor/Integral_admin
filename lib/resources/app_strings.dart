@@ -24,6 +24,7 @@ class ApiStrings {
   static const ORDER_QUEUE = 'order_queue';
   static const ID = AppUserStrings.ID;
   static const DISH = 'dish';
+  static const CONFIRMED = 'confirmed';
 }
 
 class AppLabelStrings {

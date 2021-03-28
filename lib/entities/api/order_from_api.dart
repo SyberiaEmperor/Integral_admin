@@ -7,6 +7,7 @@ class OrderFromApi {
   final String orderQueue;
   final double total;
   final DateTime createdAt;
+  final bool confirmed;
 
   ///Returns hours and minutes of it's creation in hh:mm format
   String get creationTime =>
@@ -16,16 +17,19 @@ class OrderFromApi {
   String get creationDate =>
       '${createdAt.day.toString().padLeft(2, '0')}.${createdAt.month.toString().padLeft(2, '0')}.${createdAt.year}';
 
-  OrderFromApi(
-      {required this.id,
-      required this.orderQueue,
-      required this.total,
-      required this.createdAt});
+  OrderFromApi({
+    required this.id,
+    required this.orderQueue,
+    required this.total,
+    required this.createdAt,
+    required this.confirmed,
+  });
 
   OrderFromApi.copy(OrderFromApi order)
       : id = order.id,
         orderQueue = order.orderQueue,
         total = order.total,
+        confirmed = order.confirmed,
         createdAt = order.createdAt;
 
   factory OrderFromApi.fromJson(Map<String, dynamic> data) {
@@ -33,8 +37,13 @@ class OrderFromApi {
     String orderQueue = data[ApiStrings.ORDER_QUEUE] ?? '';
     double total = double.parse(data[ApiStrings.TOTAL_PRICE] ?? '-42');
     DateTime createdAt = DateTime.parse(data[ApiStrings.CREATED_AT]);
+    bool confirmed = data[ApiStrings.CONFIRMED];
     return OrderFromApi(
-        createdAt: createdAt, id: id, total: total, orderQueue: orderQueue);
+        createdAt: createdAt,
+        id: id,
+        total: total,
+        orderQueue: orderQueue,
+        confirmed: confirmed);
   }
 
   @override
@@ -73,6 +82,7 @@ class FullOrder extends OrderFromApi {
         id: 1,
         createdAt: DateTime.now(),
         orderQueue: "НЕИЗВЕСТНО",
+        confirmed: false,
         total: 100.5);
 
     return FullOrder(
