@@ -7,7 +7,7 @@ import 'package:integral_admin/models/updater.dart';
 
 class ScreenWithUpdater<DataType> extends StatefulWidget {
   final Updater<DataType> updater;
-  final Widget Function(BuildContext, DataType) bodyBuilder;
+  final Widget Function(BuildContext, DataType, VoidCallback) bodyBuilder;
   final Duration updatePeriod;
   final OrderConfirmer? confirmer;
 
@@ -25,6 +25,7 @@ class ScreenWithUpdater<DataType> extends StatefulWidget {
 class _ScreenWithUpdaterState<DataType>
     extends State<ScreenWithUpdater<DataType>> {
   late final UpdateBloc<DataType> _bloc;
+  late final VoidCallback confirm;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _ScreenWithUpdaterState<DataType>
         updatePeriod: widget.updatePeriod,
         updater: widget.updater,
         confirmer: widget.confirmer);
+    confirm = _bloc.confirm;
   }
 
   @override
@@ -57,7 +59,7 @@ class _ScreenWithUpdaterState<DataType>
         if (state is ShowLoader) {
           return LoaderWidget();
         } else if (state is UpdateMainState) {
-          return widget.bodyBuilder(context, state.data);
+          return widget.bodyBuilder(context, state.data, confirm);
         } else {
           return Center(
             child: Text('Something went wrong'),

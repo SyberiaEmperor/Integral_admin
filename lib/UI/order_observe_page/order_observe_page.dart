@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 
 class OrderObservePage extends StatelessWidget {
   final FullOrder order;
-
-  const OrderObservePage({Key? key, required this.order}) : super(key: key);
+  final VoidCallback confirm;
+  const OrderObservePage({Key? key, required this.order, required this.confirm})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class OrderObservePage extends StatelessWidget {
         leading: BackButtonLeading(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: context.read<UpdateBloc>().confirm,
+        onPressed: confirm,
       ),
       body: Center(
         child: Column(
