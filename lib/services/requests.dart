@@ -15,7 +15,7 @@ class Requests {
   static const _DISHES = '/dishes';
   static const _USER = '/user';
 
-  static const _TOKEN = '/user_token';
+  static const _TOKEN = '/superuser_token';
 
   static const TIMEOUT = 5000;
 
