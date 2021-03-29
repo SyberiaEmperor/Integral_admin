@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:integral_admin/services/requests.dart';
 
 class Dish {
@@ -10,6 +11,7 @@ class Dish {
   final int price;
 
   List<String> get categories => _categories.map((e) => e.asString).toList();
+  Set<Category> get categoriesAsCat => _categories;
 
   bool containsCategory(Category category) {
     return _categories.contains(category);

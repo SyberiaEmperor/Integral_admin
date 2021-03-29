@@ -92,7 +92,7 @@ class Requests {
       String path = buildPathForBaseUri([_DISHES]);
       print(dish.toJson());
       Response response =
-          await _baseDio.post(path, data: jsonEncode({'dish': dish.toJson()}));
+          await _jwtDio.post(path, data: jsonEncode({'dish': dish.toJson()}));
       print(response.statusCode);
       if (response.statusCode == HttpStatus.ok) {
         return;
@@ -109,7 +109,7 @@ class Requests {
       String path = buildPathForBaseUri([_DISHES, '/', dish.id.toString()]);
 
       Response response =
-          await _baseDio.put(path, data: jsonEncode({'dish': dish.toJson()}));
+          await _jwtDio.put(path, data: jsonEncode({'dish': dish.toJson()}));
 
       print(response.statusCode);
       if (response.statusCode == HttpStatus.ok) {

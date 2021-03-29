@@ -14,33 +14,10 @@ import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
 import 'widgets/picture_and_price.dart';
 
-class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
+class DishEditScreen<Mode extends DishEditMode> extends StatefulWidget {
   final Dish? _dish;
-  late final DisheditBloc? _bloc;
 
-  final TextEditingController price = TextEditingController();
-  final TextEditingController descpription = TextEditingController();
-  final TextEditingController name = TextEditingController();
-  final GalleryImageController imageController = GalleryImageController();
-
-  String? url;
-  Set<Category>? cats;
-
-  Uint8List? image;
-
-  bool visible = true;
-
-  DishEditScreen._(this._dish, {Key? key}) : super(key: key) {
-    print(Mode);
-    print(Mode == DishChange);
-    print(Mode == DishCreate);
-    if (Mode == DishChange) {
-      _setValues(_dish!);
-    } else {
-      cats = Set<Category>();
-    }
-    _bloc = DisheditBloc<Mode>(_dish);
-  }
+  DishEditScreen._(this._dish, {Key? key}) : super(key: key);
 
   factory DishEditScreen.edit(Dish dish) {
     return DishEditScreen<Mode>._(dish);
@@ -50,11 +27,47 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
     return DishEditScreen<Mode>._(null);
   }
 
+  @override
+  _DishEditScreenState<Mode> createState() => _DishEditScreenState<Mode>();
+}
+
+class _DishEditScreenState<Mode extends DishEditMode>
+    extends State<DishEditScreen<Mode>> {
+  final TextEditingController price = TextEditingController();
+
+  final TextEditingController descpription = TextEditingController();
+
+  final TextEditingController name = TextEditingController();
+
+  final GalleryImageController imageController = GalleryImageController();
+
+  late final DisheditBloc? _bloc;
+
+  late Set<Category> cats;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (Mode == DishChange) {
+      _setValues(widget._dish!);
+    } else {
+      cats = Set<Category>();
+    }
+    _bloc = DisheditBloc<Mode>(widget._dish);
+  }
+
+  String? url;
+
+  Uint8List? image;
+
+  bool visible = true;
+
   void _setValues(Dish dish) {
     price.text = dish.price.toString();
     descpription.text = dish.description;
     name.text = dish.name;
-    cats = Set.from(dish.categories);
+    cats = Set.from(dish.categoriesAsCat);
     url = dish.url;
     visible = dish.visible;
   }
@@ -174,8 +187,13 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                         children: [
                           Text('Блюдо видно:'),
                           Checkbox(
-                              value: visible,
-                              onChanged: (value) => visible = value ?? true)
+                            value: visible,
+                            onChanged: (value) => setState(
+                              () {
+                                visible = value ?? true;
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 20.height),
@@ -197,14 +215,14 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
           DishEditingDone(
             dish: Dish(
               visible: visible,
-              id: _dish?.id ?? 'undefined',
-              categories: cats!,
+              id: widget._dish?.id ?? 'undefined',
+              categories: cats.isEmpty ? {Category.all} : cats,
               description: descpription.text,
               name: name.text,
               price: int.tryParse(price.text) ?? 0,
               url: (imageController.image != null
                   ? imageController.base64
-                  : (Mode == DishCreate ? null : _dish!.url)),
+                  : (Mode == DishCreate ? null : widget._dish!.url)),
             ),
           ),
         ),

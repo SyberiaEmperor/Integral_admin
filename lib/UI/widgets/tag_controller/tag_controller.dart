@@ -7,7 +7,7 @@ import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_wheel.dart'
 import 'package:integral_admin/entities/dish.dart';
 
 class TagController extends StatefulWidget {
-  final Set<Category?>? categories;
+  final Set<Category>? categories;
 
   TagController({required this.categories});
 
@@ -24,8 +24,8 @@ class TagController extends StatefulWidget {
 }
 
 class _TagControllerState extends State<TagController> {
-  late List<Widget?> tags;
-  Widget? addButton;
+  late List<Widget> tags;
+  late final Widget addButton;
 
   void fillTags() {
     if (widget.categories != null) {
@@ -33,7 +33,7 @@ class _TagControllerState extends State<TagController> {
         ...widget.categories!
             .map(
               (category) => TagField(
-                category!,
+                category,
                 () {
                   widget.removeCategory(category);
                   setState(() {});
