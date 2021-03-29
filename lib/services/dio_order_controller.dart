@@ -13,6 +13,6 @@ class DioOrderController implements OrderController {
 
   @override
   Future<void> deleteOrder() {
-    throw UnimplementedError();
+    return Requests.deleteOrder(orderId);
   }
 }

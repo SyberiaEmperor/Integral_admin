@@ -10,3 +10,5 @@ class UpdateMainState<DataType> extends UpdateState<DataType> {
 }
 
 class ShowLoader extends UpdateState {}
+
+class LeavePage extends UpdateState {}

@@ -51,6 +51,7 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
   void delete() async {
     try {
       await confirmer?.deleteOrder();
+      add(LeavePageEvent());
     } on RequestException catch (e) {
       print(e.message);
     }
@@ -71,6 +72,9 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
   Stream<UpdateState> mapEventToState(
     UpdateEvent event,
   ) async* {
+    if (event is LeavePageEvent) {
+      yield LeavePage();
+    }
     if (event is RunUpdate) {
       _data = await updater.update();
       yield UpdateMainState(_data);

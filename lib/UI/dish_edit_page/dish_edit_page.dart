@@ -96,107 +96,118 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: BlocConsumer(
-            bloc: _bloc,
-            listener: (context, dynamic state) {
-              if (state is DishEditMainState) {
-                if (Mode == DishCreate) {
-                  // Navigator.pop(context);
-                }
-                if (Mode == DishChange) {
-                  _setValues(state.dish!);
-                }
+          bloc: _bloc,
+          listener: (context, dynamic state) {
+            if (state is DishEditMainState) {
+              if (Mode == DishCreate) {
+                // Navigator.pop(context);
               }
-              if (state is DishEditingCompleteState) {
-                if (state.successful) {
-                  Navigator.of(context).pop(true);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              if (Mode == DishChange) {
+                _setValues(state.dish!);
+              }
+            }
+            if (state is DishEditingCompleteState) {
+              if (state.successful) {
+                Navigator.of(context).pop(true);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
                     content: Text(state.caption),
-                  ));
-                }
-              }
-            },
-            builder: (context, dynamic state) {
-              if (state is DishEditLoadingState) {
-                return Column(
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Пожалуйста, подождите'),
-                  ],
+                  ),
                 );
               }
+            }
+          },
+          builder: (context, dynamic state) {
+            if (state is DishEditLoadingState) {
               return Column(
                 children: [
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        Center(
-                          child: Container(
-                            width: ResponsiveSize.width(300),
-                            child: TextField(
-                              controller: name,
-                              style:
-                                  Theme.of(context).primaryTextTheme.bodyText1,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.height),
-                        PictureAndPrice(
-                          imageController: imageController,
-                          priceController: price,
-                          picUrl: url,
-                          img: image,
-                          picChanged: (newPic) {
-                            image = newPic;
-                          },
-                        ),
-                        SizedBox(height: 20.height),
-                        Text(
-                          'Описание:\n\n',
-                          style: Theme.of(context).primaryTextTheme.bodyText1,
-                        ),
-                        //SizedBox(height: 20.height),
-                        Container(
-                          child: TextField(
-                            style: Theme.of(context).accentTextTheme.bodyText1,
-                            maxLines: 10,
-                            minLines: 1,
-                            controller: descpription,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.height),
-                        TagController(
-                          categories: cats,
-                        ),
-                      ],
-                    ),
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 5,
                   ),
+                  Text('Пожалуйста, подождите'),
                 ],
               );
-            }),
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Center(
+                        child: Container(
+                          width: ResponsiveSize.width(300),
+                          child: TextField(
+                            controller: name,
+                            style: Theme.of(context).primaryTextTheme.bodyText1,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.height),
+                      PictureAndPrice(
+                        imageController: imageController,
+                        priceController: price,
+                        picUrl: url,
+                        img: image,
+                        picChanged: (newPic) {
+                          image = newPic;
+                        },
+                      ),
+                      SizedBox(height: 20.height),
+                      Text(
+                        'Описание:\n\n',
+                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                      ),
+                      TextField(
+                        style: Theme.of(context).accentTextTheme.bodyText1,
+                        maxLines: 10,
+                        minLines: 1,
+                        controller: descpription,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text('Блюдо видно:'),
+                          Checkbox(
+                              value: visible,
+                              onChanged: (value) => visible = value ?? true)
+                        ],
+                      ),
+                      SizedBox(height: 20.height),
+                      TagController(
+                        categories: cats,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
       bottomNavigationBar: BottomButtonBar(
         trashVisibility: Mode == DishChange,
         leftFieldCallback: () => print('left'),
-        rightFieldCallback: () => _bloc!.add(DishEditingDone(
+        rightFieldCallback: () => _bloc!.add(
+          DishEditingDone(
             dish: Dish(
-          visible: visible,
-          id: _dish?.id ?? 'undefined',
-          categories: cats!,
-          description: descpription.text,
-          name: name.text,
-          price: int.tryParse(price.text) ?? 0,
-          url: (imageController.image != null
-              ? imageController.base64
-              : (Mode == DishCreate ? null : _dish!.url)),
-        ))),
+              visible: visible,
+              id: _dish?.id ?? 'undefined',
+              categories: cats!,
+              description: descpription.text,
+              name: name.text,
+              price: int.tryParse(price.text) ?? 0,
+              url: (imageController.image != null
+                  ? imageController.base64
+                  : (Mode == DishCreate ? null : _dish!.url)),
+            ),
+          ),
+        ),
       ),
     );
   }

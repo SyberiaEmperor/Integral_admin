@@ -21,7 +21,7 @@ class OrderObserveRoute extends MaterialPageRoute {
               updatePeriod: updatePeriod,
               confirmer: DioOrderController(orderId),
               updater: FullOrderUpdater(orderId),
-              bodyBuilder: (ctx, order, confirm, delete) => OrderObservePage(
+              bodyBuilder: (ctx, order, confirm, delete, _) => OrderObservePage(
                   confirm: confirm, order: order, delete: delete),
             );
           },

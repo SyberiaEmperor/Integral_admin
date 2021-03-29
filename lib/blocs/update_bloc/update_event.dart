@@ -7,6 +7,6 @@ class RunUpdate extends UpdateEvent {
   RunUpdate._();
 }
 
-class SetData extends UpdateEvent {
-  SetData();
-}
+class SetData extends UpdateEvent {}
+
+class LeavePageEvent extends UpdateEvent {}

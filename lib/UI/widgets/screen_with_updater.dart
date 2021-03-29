@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integral_admin/UI/orders_page/orders_page.dart';
 import 'package:integral_admin/UI/widgets/loader.dart';
 import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
 import 'package:integral_admin/models/order_controller.dart';
@@ -7,8 +8,12 @@ import 'package:integral_admin/models/updater.dart';
 
 class ScreenWithUpdater<DataType> extends StatefulWidget {
   final Updater<DataType> updater;
-  final Widget Function(BuildContext context, DataType type,
-      VoidCallback confirm, VoidCallback delete) bodyBuilder;
+  final Widget Function(
+      BuildContext context,
+      DataType type,
+      VoidCallback confirm,
+      VoidCallback delete,
+      VoidCallback update) bodyBuilder;
   final Duration updatePeriod;
   final OrderController? confirmer;
 
@@ -28,6 +33,7 @@ class _ScreenWithUpdaterState<DataType>
   late final UpdateBloc<DataType> _bloc;
   late final VoidCallback confirm;
   late final VoidCallback delete;
+  late final VoidCallback update;
 
   @override
   void initState() {
@@ -43,6 +49,7 @@ class _ScreenWithUpdaterState<DataType>
         confirmer: widget.confirmer);
     confirm = _bloc.confirm;
     delete = _bloc.delete;
+    update = _bloc.update;
   }
 
   @override
@@ -59,10 +66,15 @@ class _ScreenWithUpdaterState<DataType>
         context,
         state,
       ) {
+        if (state is LeavePage) {
+          context.findAncestorWidgetOfExactType<OrdersPage>()?.update();
+          Navigator.of(context).pop();
+        }
         if (state is ShowLoader) {
           return LoaderWidget();
         } else if (state is UpdateMainState) {
-          return widget.bodyBuilder(context, state.data, confirm, delete);
+          return widget.bodyBuilder(
+              context, state.data, confirm, delete, update);
         } else {
           return Center(
             child: Text('Something went wrong'),

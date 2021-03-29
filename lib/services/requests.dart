@@ -70,7 +70,7 @@ class Requests {
     try {
       String path = buildPathForBaseUri([_DISHES]);
 
-      Response response = await _baseDio.get(path);
+      Response response = await _jwtDio.get(path);
 
       if (response.statusCode == HttpStatus.ok) {
         List<Dish> dishes = [];
@@ -163,6 +163,26 @@ class Requests {
           [_ORDERS, '/', orderId.toString(), '/', _CONFIRM]);
 
       Response response = await _jwtDio.put(path);
+
+      if (response.statusCode != HttpStatus.ok) {
+        return FullOrder.fromJson(response.data);
+      } else {
+        throw RequestException('Ошибка во время выполнения запроса');
+      }
+    } on DioError catch (e) {
+      throw RequestException(e.message);
+    }
+  }
+
+  static Future<FullOrder> deleteOrder(int orderId) async {
+    try {
+      String path = buildPathForBaseUri([
+        _ORDERS,
+        '/',
+        orderId.toString(),
+      ]);
+
+      Response response = await _jwtDio.delete(path);
 
       if (response.statusCode != HttpStatus.ok) {
         return FullOrder.fromJson(response.data);
