@@ -52,7 +52,7 @@ class DishOrderTile extends StatelessWidget {
               ),
               OverContainerContent(orderDish.dish),
               Align(
-                alignment: Alignment(0.915.width, 0),
+                alignment: Alignment(0.955, 0),
                 child: Text(
                   orderDish.quantity.toString(),
                   style: TextStyle(
