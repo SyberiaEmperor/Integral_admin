@@ -14,7 +14,7 @@ class OrdersPageRoute extends MaterialPageRoute {
           builder: (context) => ScreenWithUpdater<List<OrderFromApi>>(
             updatePeriod: updatePeriod,
             updater: OrdersPageUpdater(),
-            bodyBuilder: (context, orders, _) =>
+            bodyBuilder: (context, orders, _, __) =>
                 OrdersPage(microOrders: orders),
           ),
         );

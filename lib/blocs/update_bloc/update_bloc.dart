@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:integral_admin/models/order_updater.dart';
+import 'package:integral_admin/models/order_controller.dart';
 import 'package:integral_admin/models/updater.dart';
 import 'package:integral_admin/services/requests.dart';
 import 'package:meta/meta.dart';
@@ -15,7 +15,7 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
   final Updater<DataType> updater;
 
   late DataType _data;
-  final OrderConfirmer? confirmer;
+  final OrderController? confirmer;
 
   ///Cycle time
   final Duration updatePeriod;
@@ -43,6 +43,14 @@ class UpdateBloc<DataType> extends Bloc<UpdateEvent, UpdateState> {
     try {
       _data = await confirmer?.updateStatus() as DataType;
       setData();
+    } on RequestException catch (e) {
+      print(e.message);
+    }
+  }
+
+  void delete() async {
+    try {
+      await confirmer?.deleteOrder();
     } on RequestException catch (e) {
       print(e.message);
     }

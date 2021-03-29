@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integral_admin/UI/widgets/loader.dart';
 import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
-import 'package:integral_admin/models/order_updater.dart';
+import 'package:integral_admin/models/order_controller.dart';
 import 'package:integral_admin/models/updater.dart';
 
 class ScreenWithUpdater<DataType> extends StatefulWidget {
   final Updater<DataType> updater;
-  final Widget Function(BuildContext, DataType, VoidCallback) bodyBuilder;
+  final Widget Function(BuildContext context, DataType type,
+      VoidCallback confirm, VoidCallback delete) bodyBuilder;
   final Duration updatePeriod;
-  final OrderConfirmer? confirmer;
+  final OrderController? confirmer;
 
   const ScreenWithUpdater({
     Key? key,
@@ -26,6 +27,7 @@ class _ScreenWithUpdaterState<DataType>
     extends State<ScreenWithUpdater<DataType>> {
   late final UpdateBloc<DataType> _bloc;
   late final VoidCallback confirm;
+  late final VoidCallback delete;
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _ScreenWithUpdaterState<DataType>
         updater: widget.updater,
         confirmer: widget.confirmer);
     confirm = _bloc.confirm;
+    delete = _bloc.delete;
   }
 
   @override
@@ -59,7 +62,7 @@ class _ScreenWithUpdaterState<DataType>
         if (state is ShowLoader) {
           return LoaderWidget();
         } else if (state is UpdateMainState) {
-          return widget.bodyBuilder(context, state.data, confirm);
+          return widget.bodyBuilder(context, state.data, confirm, delete);
         } else {
           return Center(
             child: Text('Something went wrong'),

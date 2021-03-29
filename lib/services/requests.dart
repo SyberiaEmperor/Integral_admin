@@ -13,7 +13,6 @@ class Requests {
   static const BASE_URI = 'http://$IP';
 
   static const _DISHES = '/dishes';
-  static const _USER = '/user';
   static const _ORDERS = '/orders';
   static const _CONFIRM = 'confirm';
 

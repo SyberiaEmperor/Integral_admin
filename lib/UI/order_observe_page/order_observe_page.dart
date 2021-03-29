@@ -7,8 +7,13 @@ import 'package:integral_admin/services/responsive_size.dart';
 class OrderObservePage extends StatelessWidget {
   final FullOrder order;
   final VoidCallback confirm;
+  final VoidCallback delete;
 
-  const OrderObservePage({Key? key, required this.order, required this.confirm})
+  const OrderObservePage(
+      {Key? key,
+      required this.order,
+      required this.confirm,
+      required this.delete})
       : super(key: key);
 
   @override
@@ -74,7 +79,7 @@ class OrderObservePage extends StatelessWidget {
           BottomButton(
             text: 'Отменить заказ',
             color: Colors.red,
-            action: () => print('Отмена!'),
+            action: delete,
           ),
         ],
       ),

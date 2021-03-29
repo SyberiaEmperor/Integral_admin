@@ -5,7 +5,8 @@ import 'package:integral_admin/UI/widgets/screen_with_updater.dart';
 
 import 'package:integral_admin/entities/api/order_from_api.dart';
 import 'package:integral_admin/entities/full_order_updater.dart';
-import 'package:integral_admin/services/dio_order_confirmer.dart';
+import 'package:integral_admin/services/dio_order_controller.dart';
+
 import 'package:integral_admin/services/requests.dart';
 
 class OrderObserveRoute extends MaterialPageRoute {
@@ -18,12 +19,10 @@ class OrderObserveRoute extends MaterialPageRoute {
           builder: (context) {
             return ScreenWithUpdater<FullOrder>(
               updatePeriod: updatePeriod,
-              confirmer: DioOrderConfirmer(orderId),
+              confirmer: DioOrderController(orderId),
               updater: FullOrderUpdater(orderId),
-              bodyBuilder: (ctx, order, confirm) => OrderObservePage(
-                confirm: confirm,
-                order: order,
-              ),
+              bodyBuilder: (ctx, order, confirm, delete) => OrderObservePage(
+                  confirm: confirm, order: order, delete: delete),
             );
           },
         );
