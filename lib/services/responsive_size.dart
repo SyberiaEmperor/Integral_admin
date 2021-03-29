@@ -18,6 +18,6 @@ class ResponsiveSize {
 }
 
 extension ResponsiveOnNum on num {
-  num get width => ResponsiveSize.width(this);
-  num get height => ResponsiveSize.height(this);
+  double get width => ResponsiveSize.width(this);
+  double get height => ResponsiveSize.height(this);
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integral_admin/UI/auth_page/auth_page.dart';
 import 'package:integral_admin/blocs/auth_bloc/auth_bloc.dart';
-import 'package:integral_admin/entities/test_authentication.dart';
 import 'package:integral_admin/entities/test_user_data_repository.dart';
 import 'package:integral_admin/services/dio_authenticator.dart';
 import 'package:integral_admin/services/requests.dart';

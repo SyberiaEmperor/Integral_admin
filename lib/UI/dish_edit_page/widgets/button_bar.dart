@@ -5,19 +5,19 @@ class BottomButtonBar extends StatelessWidget {
   //TODO: Add work with visibility
   final void Function() leftFieldCallback;
   final void Function() rightFieldCallback;
-  final bool? trashVisibility;
+  final bool trashVisibility;
 
   const BottomButtonBar(
       {required this.leftFieldCallback,
       required this.rightFieldCallback,
-      this.trashVisibility});
+      this.trashVisibility = true});
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: trashVisibility!,
+          visible: trashVisibility,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
             child: GestureDetector(

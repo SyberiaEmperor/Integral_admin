@@ -62,7 +62,6 @@ class FullOrder extends OrderFromApi {
     var order = OrderFromApi.fromJson(data);
     List<dynamic> orderDishesData =
         List.castFrom(data[ApiStrings.ORDER_DISHES]);
-    var dish = OrderDish.fromJson(orderDishesData.first);
     List<OrderDish> dishes = orderDishesData.map(
       (orderDish) {
         return OrderDish.fromJson(orderDish);
@@ -81,7 +80,7 @@ class FullOrder extends OrderFromApi {
     OrderFromApi order = OrderFromApi(
         id: 1,
         createdAt: DateTime.now(),
-        orderQueue: "НЕИЗВЕСТНО",
+        orderQueue: 'НЕИЗВЕСТНО',
         confirmed: false,
         total: 100.5);
 

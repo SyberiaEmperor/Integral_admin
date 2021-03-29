@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:integral_admin/entities/auth_data.dart';
-import 'package:integral_admin/entities/user.dart';
-import 'package:integral_admin/entities/user_repository.dart';
 import 'package:integral_admin/models/authentication.dart';
 import 'package:integral_admin/models/user_data_repository.dart';
 import 'package:integral_admin/utils/exceptions/auth_exceptions.dart';

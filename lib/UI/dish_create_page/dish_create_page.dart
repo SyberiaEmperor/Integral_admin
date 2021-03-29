@@ -74,12 +74,12 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.height as double?),
+                  SizedBox(height: 20.height),
                   _PictureAndPrice(
                     priceController: price,
                     img: image,
                   ),
-                  SizedBox(height: 20.height as double?),
+                  SizedBox(height: 20.height),
                   Text(
                     'Описание:\n\n',
                     style: Theme.of(context).primaryTextTheme.bodyText1,
@@ -97,7 +97,7 @@ class _DishCreateScreenState extends State<DishCreateScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.height as double?),
+                  SizedBox(height: 20.height),
                   TagController(
                     categories: cats,
                   ),
@@ -146,7 +146,7 @@ class __PictureAndPriceState extends State<_PictureAndPrice> {
         },
         child: Container(
           width: double.infinity,
-          height: 281.height as double?,
+          height: 281.height,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),

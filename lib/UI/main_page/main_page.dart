@@ -6,7 +6,6 @@ import 'package:integral_admin/UI/main_page/widgets/categories.dart';
 import 'package:integral_admin/UI/main_page/widgets/dish_tile.dart';
 import 'package:integral_admin/UI/main_page/widgets/market_title.dart';
 import 'package:integral_admin/UI/main_page/widgets/search.dart';
-import 'package:integral_admin/UI/orders_page/orders_page.dart';
 import 'package:integral_admin/UI/routes/orders_page_route.dart';
 import 'package:integral_admin/blocs/main_page_bloc/mainpage_bloc.dart';
 import 'package:integral_admin/entities/dish.dart';

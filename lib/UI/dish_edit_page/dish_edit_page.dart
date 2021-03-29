@@ -143,7 +143,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.height as double?),
+                        SizedBox(height: 20.height),
                         PictureAndPrice(
                           imageController: imageController,
                           priceController: price,
@@ -153,7 +153,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             image = newPic;
                           },
                         ),
-                        SizedBox(height: 20.height as double?),
+                        SizedBox(height: 20.height),
                         Text(
                           'Описание:\n\n',
                           style: Theme.of(context).primaryTextTheme.bodyText1,
@@ -171,7 +171,7 @@ class DishEditScreen<Mode extends DishEditMode> extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.height as double?),
+                        SizedBox(height: 20.height),
                         TagController(
                           categories: cats,
                         ),

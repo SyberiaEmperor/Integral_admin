@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:integral_admin/services/requests.dart';
 
 class Dish {
