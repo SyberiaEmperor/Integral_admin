@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:integral_admin/UI/dish_edit_page/widgets/button_bar.dart';
+import 'package:integral_admin/UI/dish_edit_page/widgets/delete_alert.dart';
 import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/entities/gallery_image_controller.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
+import 'package:integral_admin/resources/app_strings.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
@@ -210,7 +212,9 @@ class _DishEditScreenState<Mode extends DishEditMode>
       ),
       bottomNavigationBar: BottomButtonBar(
         trashVisibility: Mode == DishChange,
-        leftFieldCallback: () => print('left'),
+        leftFieldCallback: () {
+          DeleteAlert.showDeleteDialog(context);
+        },
         rightFieldCallback: () => _bloc!.add(
           DishEditingDone(
             dish: Dish(
@@ -222,7 +226,9 @@ class _DishEditScreenState<Mode extends DishEditMode>
               price: int.tryParse(price.text) ?? 0,
               url: (imageController.image != null
                   ? imageController.base64
-                  : (Mode == DishCreate ? null : widget._dish!.url)),
+                  : (Mode == DishCreate
+                      ? AppDefaultUrls.DEFAULT_DISH_URL
+                      : widget._dish!.url)),
             ),
           ),
         ),

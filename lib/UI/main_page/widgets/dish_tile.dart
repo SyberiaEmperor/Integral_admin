@@ -23,7 +23,7 @@ class DishTile extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => DishEditScreen<DishChange>.edit(dish),
             ),
-          ) as Future<bool>);
+          ));
           if (status) {
             BlocProvider.of<MainPageBloc>(context).add(Update());
           }

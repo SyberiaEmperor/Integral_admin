@@ -5,7 +5,8 @@ import 'package:integral_admin/services/responsive_size.dart';
 class Modal {
   static Category? category;
 
-  static Future mainBottomSheet(BuildContext context, Set<Category> cats) {
+  static Future<Category?> mainBottomSheet(
+      BuildContext context, Set<Category> cats) {
     void mapToType(int index) {
       category = cats.toList()[index];
       print(category);
@@ -13,7 +14,7 @@ class Modal {
 
     category = cats.isNotEmpty ? cats.toList().first : null;
 
-    return showModalBottomSheet(
+    return showModalBottomSheet<Category?>(
         enableDrag: true,
         backgroundColor: Theme.of(context).backgroundColor,
         context: context, //
@@ -56,7 +57,7 @@ class Modal {
                   width: ResponsiveSize.width(200),
                   height: ResponsiveSize.height(50),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.blue,
                     borderRadius: BorderRadius.all(
                       Radius.circular(ResponsiveSize.height(10)),
                     ),

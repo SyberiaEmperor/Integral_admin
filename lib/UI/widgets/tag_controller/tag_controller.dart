@@ -55,8 +55,7 @@ class _TagControllerState extends State<TagController> {
             CategoriesExt.excludeAll.toSet().difference(widget.categories!);
         if (diff.isNotEmpty) {
           //Теперь не выезжает лист. Если нужно будет другое поведение - заменить
-          Category? new_tag = await (Modal.mainBottomSheet(context, diff)
-              as FutureOr<Category?>);
+          Category? new_tag = await (Modal.mainBottomSheet(context, diff));
           if (new_tag != null) {
             widget.addCategory(new_tag);
             setState(() {});
