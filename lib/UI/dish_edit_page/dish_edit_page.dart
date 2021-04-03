@@ -212,33 +212,34 @@ class _DishEditScreenState<Mode extends DishEditMode>
         ),
       ),
       bottomNavigationBar: BottomButtonBar(
-        trashVisibility: Mode == DishChange,
-        leftFieldCallback: () {
-          DeleteAlert.showDeleteDialog(
-            context,
-            onDelete: () {
-              _bloc.add(DishDelete());
-            },
-          );
-        },
-        rightFieldCallback: () => _bloc.add(
-          DishEditingDone(
-            dish: Dish(
-              visible: visible,
-              id: widget._dish?.id ?? 'undefined',
-              categories: cats.isEmpty ? {Category.all} : cats,
-              description: descpription.text,
-              name: name.text,
-              price: int.tryParse(price.text) ?? 0,
-              url: (imageController.image != null
-                  ? imageController.base64
-                  : (Mode == DishCreate
-                      ? AppDefaultUrls.DEFAULT_DISH_URL
-                      : widget._dish!.url)),
-            ),
-          ),
-        ),
-      ),
+          trashVisibility: Mode == DishChange,
+          leftFieldCallback: () {
+            DeleteAlert.showDeleteDialog(
+              context,
+              onDelete: () {
+                _bloc.add(DishDelete());
+              },
+            );
+          },
+          rightFieldCallback: () => {
+                _bloc.add(
+                  DishEditingDone(
+                    dish: Dish(
+                      visible: visible,
+                      id: widget._dish?.id ?? 'undefined',
+                      categories: cats.isEmpty ? {Category.all} : cats,
+                      description: descpription.text,
+                      name: name.text,
+                      price: int.tryParse(price.text) ?? 0,
+                      url: (imageController.image != null
+                          ? imageController.base64
+                          : (Mode == DishCreate
+                              ? AppDefaultUrls.DEFAULT_DISH_URL
+                              : widget._dish!.url)),
+                    ),
+                  ),
+                ),
+              }),
     );
   }
 }

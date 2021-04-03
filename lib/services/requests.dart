@@ -89,7 +89,6 @@ class Requests {
   static Future<void> postDish(Dish dish) async {
     try {
       String path = buildPathForBaseUri([_DISHES]);
-      print(dish.toJson());
       Response response =
           await _jwtDio.post(path, data: jsonEncode({'dish': dish.toJson()}));
       print(response.statusCode);

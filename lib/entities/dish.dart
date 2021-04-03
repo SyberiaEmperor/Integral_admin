@@ -82,14 +82,22 @@ class Dish {
   }
 
   Map<String, dynamic> toJson() {
+    String picUrl;
+    if (url != null) {
+      if (url!.length > 100) {
+        picUrl = 'data:image/jpeg;base64,' + url!;
+      } else {
+        picUrl = url!.replaceAll(Requests.BASE_URI, '');
+      }
+    } else {
+      picUrl = '';
+    }
     return {
       'name': name,
       'description': description,
       'price': price,
       'categories': (_categories.map((e) => e.index).toList()),
-      'picture': url != null
-          ? ((url!.length > 100) ? 'data:image/jpeg;base64,' + url! : url)
-          : null,
+      'picture': picUrl,
     };
   }
 
