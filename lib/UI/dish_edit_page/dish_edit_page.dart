@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:integral_admin/UI/dish_edit_page/widgets/button_bar.dart';
 import 'package:integral_admin/UI/dish_edit_page/widgets/delete_alert.dart';
+import 'package:integral_admin/UI/widgets/light_loader.dart';
 import 'package:integral_admin/blocs/dish_edit_bloc/dishedit_bloc.dart';
 
 import 'package:integral_admin/entities/dish.dart';
@@ -104,114 +105,113 @@ class _DishEditScreenState<Mode extends DishEditMode>
     );
   }
 
+  void unfocus(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: _buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: BlocConsumer(
-          bloc: _bloc,
-          listener: (context, dynamic state) {
-            if (state is DishEditMainState) {
-              if (Mode == DishCreate) {
-                // Navigator.pop(context);
+    return GestureDetector(
+      onTap: () => unfocus(context),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: _buildAppBar(context),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: BlocConsumer(
+            bloc: _bloc,
+            listener: (context, dynamic state) {
+              if (state is DishEditMainState) {
+                if (Mode == DishCreate) {
+                  // Navigator.pop(context);
+                }
+                if (Mode == DishChange) {
+                  _setValues(state.dish!);
+                }
               }
-              if (Mode == DishChange) {
-                _setValues(state.dish!);
+              if (state is DishEditingCompleteState) {
+                if (state.successful) {
+                  Navigator.of(context).pop(true);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.caption),
+                    ),
+                  );
+                }
               }
-            }
-            if (state is DishEditingCompleteState) {
-              if (state.successful) {
-                Navigator.of(context).pop(true);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.caption),
-                  ),
-                );
+            },
+            builder: (context, dynamic state) {
+              if (state is DishEditLoadingState) {
+                return LightLoader();
               }
-            }
-          },
-          builder: (context, dynamic state) {
-            if (state is DishEditLoadingState) {
               return Column(
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text('Пожалуйста, подождите'),
-                ],
-              );
-            }
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Center(
-                        child: Container(
-                          width: ResponsiveSize.width(300),
-                          child: TextField(
-                            controller: name,
-                            style: Theme.of(context).primaryTextTheme.bodyText1,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20.height),
-                      PictureAndPrice(
-                        imageController: imageController,
-                        priceController: price,
-                        picUrl: url,
-                        img: image,
-                        picChanged: (newPic) {
-                          image = newPic;
-                        },
-                      ),
-                      SizedBox(height: 20.height),
-                      Text(
-                        'Описание:\n\n',
-                        style: Theme.of(context).primaryTextTheme.bodyText1,
-                      ),
-                      TextField(
-                        style: Theme.of(context).accentTextTheme.bodyText1,
-                        maxLines: 10,
-                        minLines: 1,
-                        controller: descpription,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Text('Блюдо видно:'),
-                          Checkbox(
-                            value: visible,
-                            onChanged: (value) => setState(
-                              () {
-                                visible = value ?? true;
-                              },
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Center(
+                          child: Container(
+                            width: ResponsiveSize.width(300),
+                            child: TextField(
+                              controller: name,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 20.height),
-                      TagController(
-                        categories: cats,
-                      ),
-                    ],
+                        ),
+                        SizedBox(height: 20.height),
+                        PictureAndPrice(
+                          imageController: imageController,
+                          priceController: price,
+                          picUrl: url,
+                          img: image,
+                          picChanged: (newPic) {
+                            image = newPic;
+                          },
+                        ),
+                        SizedBox(height: 20.height),
+                        Text(
+                          'Описание:\n\n',
+                          style: Theme.of(context).primaryTextTheme.bodyText1,
+                        ),
+                        TextField(
+                          style: Theme.of(context).accentTextTheme.bodyText1,
+                          maxLines: 10,
+                          minLines: 1,
+                          controller: descpription,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text('Блюдо видно:'),
+                            Checkbox(
+                              value: visible,
+                              onChanged: (value) => setState(
+                                () {
+                                  visible = value ?? true;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.height),
+                        TagController(
+                          categories: cats,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomButtonBar(
+        bottomNavigationBar: BottomButtonBar(
           trashVisibility: Mode == DishChange,
           leftFieldCallback: () {
             DeleteAlert.showDeleteDialog(
@@ -222,24 +222,26 @@ class _DishEditScreenState<Mode extends DishEditMode>
             );
           },
           rightFieldCallback: () => {
-                _bloc.add(
-                  DishEditingDone(
-                    dish: Dish(
-                      visible: visible,
-                      id: widget._dish?.id ?? 'undefined',
-                      categories: cats.isEmpty ? {Category.all} : cats,
-                      description: descpription.text,
-                      name: name.text,
-                      price: int.tryParse(price.text) ?? 0,
-                      url: (imageController.image != null
-                          ? imageController.base64
-                          : (Mode == DishCreate
-                              ? AppDefaultUrls.DEFAULT_DISH_URL
-                              : widget._dish!.url)),
-                    ),
-                  ),
+            _bloc.add(
+              DishEditingDone(
+                dish: Dish(
+                  visible: visible,
+                  id: widget._dish?.id ?? 'undefined',
+                  categories: cats.isEmpty ? {Category.all} : cats,
+                  description: descpription.text,
+                  name: name.text,
+                  price: int.tryParse(price.text) ?? 0,
+                  url: (imageController.image != null
+                      ? imageController.base64
+                      : (Mode == DishCreate
+                          ? AppDefaultUrls.DEFAULT_DISH_URL
+                          : widget._dish!.url)),
                 ),
-              }),
+              ),
+            ),
+          },
+        ),
+      ),
     );
   }
 }
