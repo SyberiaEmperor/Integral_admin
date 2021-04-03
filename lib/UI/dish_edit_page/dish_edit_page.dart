@@ -45,14 +45,13 @@ class _DishEditScreenState<Mode extends DishEditMode>
 
   final GalleryImageController imageController = GalleryImageController();
 
-  late final DisheditBloc? _bloc;
+  late final DisheditBloc _bloc;
 
   late Set<Category> cats;
 
   @override
   void initState() {
     super.initState();
-
     if (Mode == DishChange) {
       _setValues(widget._dish!);
     } else {
@@ -216,11 +215,14 @@ class _DishEditScreenState<Mode extends DishEditMode>
       bottomNavigationBar: BottomButtonBar(
         trashVisibility: Mode == DishChange,
         leftFieldCallback: () {
-          DeleteAlert.showDeleteDialog(context, onDelete: () {
-            Navigator.of(context).pop(true);
-          });
+          DeleteAlert.showDeleteDialog(
+            context,
+            onDelete: () {
+              _bloc.add(DishDelete());
+            },
+          );
         },
-        rightFieldCallback: () => _bloc!.add(
+        rightFieldCallback: () => _bloc.add(
           DishEditingDone(
             dish: Dish(
               visible: visible,

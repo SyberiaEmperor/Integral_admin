@@ -24,9 +24,9 @@ class DisheditBloc<Mode extends DishEditMode>
   ) async* {
     bool successful = true;
     String caption = '';
-    if (event is DishEditingDone) {
-      yield DishEditLoadingState();
-      try {
+    try {
+      if (event is DishEditingDone) {
+        yield DishEditLoadingState();
         if (!checkFields(event.dish)) {
           throw WrongFieldException('Некорректные поля');
         }
@@ -36,16 +36,19 @@ class DisheditBloc<Mode extends DishEditMode>
         if (Mode == DishCreate) {
           await controller.create(event.dish);
         }
-      } on RequestException catch (e) {
-        successful = false;
-        caption = e.message;
-      } on WrongFieldException catch (e) {
-        successful = false;
-        caption = e.message;
-      } finally {
-        yield DishEditingCompleteState(successful, caption: caption);
-        yield DishEditMainState(_dish);
       }
+      if (event is DishDelete) {
+        await controller.delete();
+      }
+    } on RequestException catch (e) {
+      successful = false;
+      caption = e.message;
+    } on WrongFieldException catch (e) {
+      successful = false;
+      caption = e.message;
+    } finally {
+      yield DishEditingCompleteState(successful, caption: caption);
+      yield DishEditMainState(_dish);
     }
   }
 

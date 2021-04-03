@@ -7,3 +7,5 @@ class DishEditingDone extends DisheditEvent {
   final Dish dish;
   DishEditingDone({required this.dish});
 }
+
+class DishDelete extends DisheditEvent {}
