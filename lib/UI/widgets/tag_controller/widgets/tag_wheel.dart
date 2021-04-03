@@ -64,7 +64,7 @@ class Modal {
                   ),
                   child: Center(
                       child: Text(
-                    'Изменить',
+                    'Выбрать',
                     style: TextStyle(color: Theme.of(context).backgroundColor),
                   )),
                 ),
