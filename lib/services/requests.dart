@@ -107,8 +107,14 @@ class Requests {
     try {
       String path = buildPathForBaseUri([_DISHES, '/', dish.id.toString()]);
 
-      Response response =
-          await _jwtDio.put(path, data: jsonEncode({'dish': dish.toJson()}));
+      Response response = await _jwtDio.put(
+        path,
+        data: jsonEncode(
+          {
+            'dish': dish.toJson(),
+          },
+        ),
+      );
 
       print(response.statusCode);
       if (response.statusCode == HttpStatus.ok) {
