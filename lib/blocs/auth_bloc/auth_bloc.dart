@@ -13,10 +13,15 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
-      UserDataRepository dataRepository, AuthenticationInterface loginService)
-      : _urp = dataRepository,
+    UserDataRepository dataRepository,
+    AuthenticationInterface loginService,
+  )   : _urp = dataRepository,
         _loginService = loginService,
-        super(AuthMainState());
+        super(
+          AuthMainState(),
+        ) {
+    add(AuthFirstCheckEvent());
+  }
 
   final UserDataRepository _urp;
   final AuthenticationInterface _loginService;

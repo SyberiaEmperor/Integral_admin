@@ -6,6 +6,7 @@ import 'package:integral_admin/entities/test_user_data_repository.dart';
 import 'package:integral_admin/services/dio_authenticator.dart';
 import 'package:integral_admin/services/requests.dart';
 import 'package:integral_admin/services/responsive_size.dart';
+import 'package:integral_admin/services/sp_data_rep.dart';
 
 void main() {
   Requests.initReqs();
@@ -70,9 +71,9 @@ class MyApp extends StatelessWidget {
       home: Builder(builder: (context) {
         return BlocProvider(
           create: (context) => AuthBloc(
-            TestUserDataRepository(),
+            SpDataRepository(),
             DioAuthenticator(),
-          )..add(AuthFirstCheckEvent()),
+          ),
           child: AuthPage(),
         );
       }),
