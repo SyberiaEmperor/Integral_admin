@@ -12,7 +12,6 @@ import 'package:integral_admin/entities/gallery_image_controller.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/resources/app_strings.dart';
 import 'package:integral_admin/services/dio_dish_changer.dart';
-import 'package:integral_admin/services/dio_order_controller.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 

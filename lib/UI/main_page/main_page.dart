@@ -92,6 +92,8 @@ class MainPage extends StatelessWidget {
                             SliverAppBar(
                               elevation: 0.0,
                               stretch: true,
+                              pinned: true,
+                              centerTitle: true,
                               collapsedHeight: ResponsiveSize.height(115),
                               expandedHeight: ResponsiveSize.height(115),
                               backgroundColor:
@@ -110,16 +112,13 @@ class MainPage extends StatelessWidget {
                                     categories: Category.values,
                                     selectedCategory: state.category,
                                     onSelect: (category) {
-                                      context
-                                          .read<MainPageBloc>()
+                                      mainBloc
                                           .add(ChangeCategoryEvent(category));
                                     },
                                   ),
                                   SizedBox(height: ResponsiveSize.height(26)),
                                 ],
                               ),
-                              pinned: true,
-                              centerTitle: true,
                             ),
                             SliverList(
                               delegate: SliverChildListDelegate(
@@ -132,24 +131,31 @@ class MainPage extends StatelessWidget {
                   );
                 }
                 if (state is LoadingState) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Загружаем данные...')
-                      ],
-                    ),
-                  );
+                  return Loader();
                 }
                 return Container();
               },
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Loader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(
+            height: 10,
+          ),
+          Text('Загружаем данные...')
+        ],
       ),
     );
   }
