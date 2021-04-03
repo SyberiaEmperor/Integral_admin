@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/orders_page/widgets/order_tile.dart';
 import 'package:integral_admin/UI/widgets/back_button.dart';
-import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
+
 import 'package:integral_admin/entities/api/order_from_api.dart';
-import 'package:provider/provider.dart';
 
 class OrdersPage extends StatelessWidget {
   final List<OrderFromApi> microOrders;

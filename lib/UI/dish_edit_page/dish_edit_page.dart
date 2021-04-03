@@ -11,6 +11,8 @@ import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/entities/gallery_image_controller.dart';
 import 'package:integral_admin/models/dish_edit_modes.dart';
 import 'package:integral_admin/resources/app_strings.dart';
+import 'package:integral_admin/services/dio_dish_changer.dart';
+import 'package:integral_admin/services/dio_order_controller.dart';
 import 'package:integral_admin/services/responsive_size.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/tag_controller.dart';
 
@@ -56,7 +58,8 @@ class _DishEditScreenState<Mode extends DishEditMode>
     } else {
       cats = Set<Category>();
     }
-    _bloc = DisheditBloc<Mode>(widget._dish);
+    var controller = DioDishChanger(widget._dish?.id ?? '\b');
+    _bloc = DisheditBloc<Mode>(widget._dish, controller);
   }
 
   String? url;
@@ -213,7 +216,9 @@ class _DishEditScreenState<Mode extends DishEditMode>
       bottomNavigationBar: BottomButtonBar(
         trashVisibility: Mode == DishChange,
         leftFieldCallback: () {
-          DeleteAlert.showDeleteDialog(context);
+          DeleteAlert.showDeleteDialog(context, onDelete: () {
+            Navigator.of(context).pop(true);
+          });
         },
         rightFieldCallback: () => _bloc!.add(
           DishEditingDone(

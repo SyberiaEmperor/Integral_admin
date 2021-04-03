@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/widgets/add_tag_button.dart';
 import 'package:integral_admin/UI/widgets/tag_controller/widgets/tag_field.dart';
@@ -69,7 +67,7 @@ class _TagControllerState extends State<TagController> {
   Widget build(BuildContext context) {
     fillTags();
     return Wrap(
-      children: tags as List<Widget>,
+      children: tags,
     );
   }
 }

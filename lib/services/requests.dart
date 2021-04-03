@@ -56,7 +56,6 @@ class Requests {
           await _baseDio.post(_TOKEN, data: {'auth': data.toJson()});
       print(response.data);
       if (response.statusCode == HttpStatus.created) {
-        //TODO: Remove _jwt ?
         var jwt = response.data[AppUserStrings.TOKEN];
         _initJwt(jwt);
         return;
@@ -110,6 +109,25 @@ class Requests {
 
       Response response =
           await _jwtDio.put(path, data: jsonEncode({'dish': dish.toJson()}));
+
+      print(response.statusCode);
+      if (response.statusCode == HttpStatus.ok) {
+        return;
+      } else {
+        throw RequestException(response.statusCode.toString());
+      }
+    } on DioError catch (error) {
+      throw RequestException(error.message);
+    }
+  }
+
+  static Future<void> deleteDish(String id) async {
+    try {
+      String path = buildPathForBaseUri([_DISHES, '/', id]);
+
+      Response response = await _jwtDio.delete(
+        path,
+      );
 
       print(response.statusCode);
       if (response.statusCode == HttpStatus.ok) {
