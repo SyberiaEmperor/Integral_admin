@@ -34,6 +34,7 @@ class OrderTile extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: ResponsiveSize.height(25),
+                child: Icon(Icons.restaurant),
               ),
             ),
             Expanded(
@@ -55,10 +56,7 @@ class OrderTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    'Какой-то текст',
-                    style: Theme.of(context).accentTextTheme.bodyText1,
-                  ),
+                  StatusTile(confirmed: microOrder.confirmed),
                 ],
               ),
             ),
@@ -68,6 +66,23 @@ class OrderTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class StatusTile extends StatelessWidget {
+  final Color color;
+  final String text;
+
+  const StatusTile({Key? key, required bool confirmed})
+      : color = confirmed ? Colors.green : Colors.red,
+        text = confirmed ? 'Оплачен' : 'Не оплачен',
+        super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(color: color),
     );
   }
 }
