@@ -5,6 +5,7 @@ import 'package:integral_admin/UI/widgets/loader.dart';
 import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
 import 'package:integral_admin/models/order_controller.dart';
 import 'package:integral_admin/models/updater.dart';
+import 'package:integral_admin/services/singletone.dart';
 
 class ScreenWithUpdater<DataType> extends StatefulWidget {
   final Updater<DataType> updater;
@@ -60,15 +61,20 @@ class _ScreenWithUpdaterState<DataType>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateBloc, UpdateState>(
+    return BlocConsumer<UpdateBloc, UpdateState>(
       bloc: _bloc,
+      listener: (context, state) {
+        if (state is LeavePage) {
+          Singletone().update();
+          Navigator.of(context).pop();
+        }
+      },
       builder: (
         context,
         state,
       ) {
         if (state is LeavePage) {
-          context.findAncestorWidgetOfExactType<OrdersPage>()?.update();
-          Navigator.of(context).pop();
+          return Scaffold();
         }
         if (state is ShowLoader) {
           return LoaderWidget();
