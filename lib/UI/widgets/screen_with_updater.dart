@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integral_admin/UI/orders_page/orders_page.dart';
 import 'package:integral_admin/UI/widgets/loader.dart';
 import 'package:integral_admin/blocs/update_bloc/update_bloc.dart';
 import 'package:integral_admin/models/order_controller.dart';
