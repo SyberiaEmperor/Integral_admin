@@ -41,6 +41,9 @@ class Modal {
                           child: Center(
                             child: Text(
                               cats.toList()[index].asString,
+                              style: TextStyle(
+                                fontSize: 12.height,
+                              ),
                             ),
                           ),
                         );

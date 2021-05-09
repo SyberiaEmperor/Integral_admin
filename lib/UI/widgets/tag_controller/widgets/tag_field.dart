@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:integral_admin/entities/dish.dart';
+import 'package:integral_admin/services/responsive_size.dart';
 
 class TagField extends StatelessWidget {
   final Category tag;
@@ -24,7 +25,8 @@ class TagField extends StatelessWidget {
           children: [
             Text(
               tag.asString,
-              style: TextStyle(fontSize: 12, color: Colors.white),
+              style: TextStyle(
+                  fontSize: ResponsiveSize.height(10), color: Colors.white),
               textWidthBasis: TextWidthBasis.parent,
             ),
             SizedBox(

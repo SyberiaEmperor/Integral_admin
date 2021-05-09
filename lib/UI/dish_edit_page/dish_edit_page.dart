@@ -155,6 +155,9 @@ class _DishEditScreenState<Mode extends DishEditMode>
                             width: ResponsiveSize.width(300),
                             child: TextField(
                               controller: name,
+                              decoration: InputDecoration(
+                                hintText: 'Название',
+                              ),
                               style:
                                   Theme.of(context).primaryTextTheme.bodyText1,
                             ),
