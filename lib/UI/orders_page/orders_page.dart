@@ -12,6 +12,25 @@ class OrdersPage extends StatelessWidget {
       : super(key: key) {
     Singletone().update = update;
   }
+
+  Widget body() {
+    if (microOrders.isEmpty) {
+      return const Center(
+        child: Text('У Вас пока что нет заказов.'),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: List<Widget>.from(
+            microOrders.map(
+              (order) => OrderTile(microOrder: order),
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,15 +40,7 @@ class OrdersPage extends StatelessWidget {
           elevation: 0.0,
           leading: BackButtonLeading(),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: List<Widget>.from(
-              microOrders.map(
-                (order) => OrderTile(microOrder: order),
-              ),
-            ),
-          ),
-        ),
+        body: body(),
       ),
     );
   }

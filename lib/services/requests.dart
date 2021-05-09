@@ -154,6 +154,8 @@ class Requests {
             .toList();
         print(orders);
         return orders;
+      } else if (response.statusCode == HttpStatus.noContent) {
+        return [];
       }
       throw RequestException('Ошибка во время получения заказов');
     } on DioError catch (e) {
