@@ -19,7 +19,7 @@ class OrderTile extends StatelessWidget {
         );
       },
       child: Container(
-        height: ResponsiveSize.height(60),
+        height: ResponsiveSize.height(70),
         decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             border:

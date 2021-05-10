@@ -12,10 +12,10 @@ class TagField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0, bottom: 8),
+      padding: EdgeInsets.only(right: 8.0.width, bottom: 8.height),
       child: Container(
-        height: 25,
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+        height: 25.height,
+        padding: EdgeInsets.symmetric(horizontal: 18.width, vertical: 6.height),
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.circular(40),
@@ -30,13 +30,13 @@ class TagField extends StatelessWidget {
               textWidthBasis: TextWidthBasis.parent,
             ),
             SizedBox(
-              width: 5,
+              width: 5.width,
             ),
             GestureDetector(
               onTap: removeTag,
               child: Container(
-                width: 14,
-                height: 25,
+                width: 14.width,
+                height: 25.height,
                 decoration: BoxDecoration(
                   color: Color(0xff0c2977),
                   borderRadius: BorderRadius.circular(10),

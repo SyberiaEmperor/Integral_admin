@@ -11,8 +11,8 @@ class AddTagButton extends StatelessWidget {
     return GestureDetector(
       onTap: addTag as void Function()?, //Add tag function
       child: Container(
-        width: 150,
-        height: 25,
+        width: 150.width,
+        height: 25.height,
         decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.circular(40),
