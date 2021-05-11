@@ -18,16 +18,21 @@ class Search extends StatelessWidget {
       height: ResponsiveSize.height(45),
       child: TextField(
         controller: controller,
+        // textAlignVertical: TextAlignVertical.center,
         onEditingComplete: onEditingComplete as void Function()?,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(bottom: 1, top: 3),
+          contentPadding: EdgeInsets.symmetric(vertical: 10),
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(ResponsiveSize.height(5))),
+            borderRadius: BorderRadius.circular(
+              ResponsiveSize.height(5),
+            ),
+          ),
           enabledBorder: InputBorder.none,
           prefixIcon: Container(
             margin: EdgeInsets.only(
-                right: ResponsiveSize.width(15),
-                left: ResponsiveSize.width(11)),
+              right: ResponsiveSize.width(15),
+              left: ResponsiveSize.width(11),
+            ),
             width: ResponsiveSize.width(20),
             height: ResponsiveSize.height(20),
             child: Icon(
