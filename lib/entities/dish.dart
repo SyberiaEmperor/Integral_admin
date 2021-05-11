@@ -96,6 +96,7 @@ class Dish {
       'name': name,
       'description': description,
       'price': price,
+      'visible': visible,
       'categories': (_categories.map((e) => e.index).toList()),
       'picture': picUrl,
     };

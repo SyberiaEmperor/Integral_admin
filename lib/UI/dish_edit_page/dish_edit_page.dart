@@ -189,18 +189,14 @@ class _DishEditScreenState<Mode extends DishEditMode>
                             ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text('Блюдо видно:'),
-                            Checkbox(
-                              value: visible,
-                              onChanged: (value) => setState(
-                                () {
-                                  visible = value ?? true;
-                                },
-                              ),
-                            ),
-                          ],
+                        CheckboxListTile(
+                          title: Text('Блюдо видно:'),
+                          value: visible,
+                          onChanged: (value) => setState(
+                            () {
+                              visible = value ?? true;
+                            },
+                          ),
                         ),
                         SizedBox(height: 20.height),
                         TagController(

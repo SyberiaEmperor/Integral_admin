@@ -6,6 +6,7 @@ import 'package:integral_admin/entities/api/order_from_api.dart';
 import 'package:integral_admin/entities/auth_data.dart';
 import 'package:integral_admin/entities/dish.dart';
 import 'package:integral_admin/resources/app_strings.dart';
+import 'package:integral_admin/resources/exception_captions.dart';
 import 'package:integral_admin/utils/exceptions/auth_exceptions.dart';
 
 class Requests {
@@ -61,7 +62,11 @@ class Requests {
         return;
       }
     } on DioError catch (error) {
-      throw AuthException(error.message);
+      if ((error.response?.statusCode ?? 0) == HttpStatus.notFound) {
+        throw AuthException(AuthExceptionCaption.INVALID_ARGS);
+      } else {
+        throw AuthException(DioExceptionCaption.BAD_INTERNET);
+      }
     }
   }
 
@@ -81,8 +86,8 @@ class Requests {
       } else {
         throw RequestException('Ошибка при запросе');
       }
-    } on DioError catch (e) {
-      throw RequestException(e.message);
+    } on DioError {
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 
@@ -97,8 +102,8 @@ class Requests {
       } else {
         throw RequestException(response.statusCode.toString());
       }
-    } on DioError catch (e) {
-      throw RequestException(e.message);
+    } on DioError {
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 
@@ -158,8 +163,8 @@ class Requests {
         return [];
       }
       throw RequestException('Ошибка во время получения заказов');
-    } on DioError catch (e) {
-      throw RequestException(e.message);
+    } on DioError {
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 
@@ -177,8 +182,8 @@ class Requests {
       } else {
         throw RequestException('Такого заказа не существует');
       }
-    } on DioError catch (e) {
-      throw RequestException(e.message);
+    } on DioError {
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 
@@ -194,8 +199,8 @@ class Requests {
       } else {
         throw RequestException('Ошибка во время выполнения запроса');
       }
-    } on DioError catch (e) {
-      throw RequestException(e.message);
+    } on DioError {
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 
@@ -218,7 +223,7 @@ class Requests {
       if (e.response!.statusCode == HttpStatus.forbidden) {
         throw RequestException('Вы не можете удалить подтверждённый заказ');
       }
-      throw RequestException(e.message);
+      throw RequestException(DioExceptionCaption.BAD_INTERNET);
     }
   }
 }
