@@ -23,6 +23,9 @@ class OrderObservePage extends StatelessWidget {
         Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 25.height);
     TextStyle valueStyle =
         Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 25.height);
+    TextStyle confirmedValueStyle =
+        valueStyle.copyWith(color: order.confirmed ? Colors.green : Colors.red);
+    String confirmedCaption = order.confirmed ? 'Оплачен' : 'Не оплачен';
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -56,9 +59,9 @@ class OrderObservePage extends StatelessWidget {
             ),
             NameValueMapOrderBox(
               name: 'Статус:',
-              value: order.orderQueue,
+              value: confirmedCaption,
               nameStyle: nameStyle,
-              valueStyle: valueStyle,
+              valueStyle: confirmedValueStyle,
             ),
             Expanded(
               child: DishOrderList(
